@@ -9,7 +9,11 @@ Widget hrzSpacer(double h) {
   );
 }
 
-Widget hrzButton(String label, BuildContext context, {Widget nav}) {
+buttonNav(context, Widget wdg) {
+  Navigator.of(context).push(MaterialPageRoute(builder: (context) => wdg));
+}
+
+Widget hrzButton(String label, BuildContext context, {List actions}) {
   return Container(
     width: double.infinity,
     height: 40.0,
@@ -17,11 +21,7 @@ Widget hrzButton(String label, BuildContext context, {Widget nav}) {
       color: Theme.of(context).buttonColor,
       disabledColor: Theme.of(context).buttonColor,
       onPressed: () {
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => nav,
-          ),
-        );
+        actions.forEach((value) => value);
       },
       child: Text(
         label,
@@ -42,24 +42,36 @@ Widget fieldLabel(String labelTxt) {
   );
 }
 
-Widget formField({String hintTxt}) {
+Widget formField({String hintTxt, controller, List actions}) {
   return Container(
     color: Colors.white70,
     height: 40.0,
     width: double.infinity,
     child: TextFormField(
-      //TODO: REFERENCE THEME COLOR
-      style: TextStyle(color: Colors.white),
-      decoration: InputDecoration(
-        fillColor: Colors.white,
-        labelText: hintTxt,
-      ),
+      controller: controller,
+      onChanged: (text) {
+        actions.forEach((value) => value);
+      },
       validator: (value) {
         if (value.isEmpty) {
           return 'Please enter some text';
         }
         return null;
       },
+      //TODO: REFERENCE THEME COLOR
+      style: TextStyle(color: Colors.white),
+      decoration: InputDecoration(
+        fillColor: Colors.white,
+        labelText: hintTxt,
+      ),
     ),
   );
+}
+
+getFieldValue(final controller, var x) {
+  //setState() {
+  if (x != null) {
+    controller.text = x;
+    //}
+  }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:reach_back/Course.dart';
 import 'Hole.dart';
 import 'Globals.dart' as global;
 
@@ -35,14 +36,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int holeCount = 0;
-  List<Hole> holesPlayed = [];
-  void incHole() {
-    setState(() {
-      holeCount++;
-    });
-  }
-
   //HOME SCREEN -- LANDING SCREEN WHEN APP IS OPENED
   @override
   Widget build(BuildContext context) {
@@ -57,9 +50,11 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: Image.asset('images/ReachBackLogo.png'),
               ),
               global.hrzSpacer(40.0),
-              global.hrzButton('New Round', context, nav: CourseForm()),
+              global.hrzButton('New Round', context,
+                  actions: [global.buttonNav(context, CourseForm())]),
               global.hrzSpacer(40.0),
-              global.hrzButton('Continue Previous Round', context)
+              global.hrzButton('Continue Previous Round', context,
+                  actions: [null])
             ],
           ),
         ),
@@ -77,9 +72,28 @@ class CourseForm extends StatefulWidget {
 
 //NEW COURSE FORM
 class CourseFormState extends State<CourseForm> {
+  //VARIABLES
   final _formKey = GlobalKey<FormState>();
+  final fldController = TextEditingController();
+  String courseName;
+  String description;
+  int startHole;
+  int endHole;
+
+  //FUNCTIONS
+  createCourse() {
+    var newCourse = new Course(courseName,
+        desc: description, start: startHole, end: endHole);
+  }
 
   @override
+  void dispose() {
+    // Clean up the controller when the widget is disposed.
+    fldController.dispose();
+    super.dispose();
+  }
+
+//***************************************************
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
@@ -92,22 +106,36 @@ class CourseFormState extends State<CourseForm> {
           key: _formKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+            children: <Widget>[
               global.hrzSpacer(40.0),
+              //COURSE NAME FIELD
               global.fieldLabel('Course Name:'),
-              global.formField(),
+              global.formField(
+                  controller: fldController,
+                  actions: global.getFieldValue(fldController, courseName)),
               global.hrzSpacer(45.0),
+              //DESCRIPTION FIELD
               global.fieldLabel('Description:'),
-              global.formField(hintTxt: "Weather, how you're feeling, etc..."),
+              global.formField(
+                  hintTxt: "Weather, how you're feeling, etc...",
+                  controller: fldController,
+                  actions: global.getFieldValue(fldController, description)),
               global.hrzSpacer(45.0),
+              //STARTING HOLE FIELD
               //TODO: PUT FIELD AND LABEL ON SAME LINE
               global.fieldLabel('Starting Hole:'),
-              global.formField(),
+              global.formField(
+                  controller: fldController,
+                  actions: global.getFieldValue(fldController, startHole)),
               global.hrzSpacer(45.0),
+              //ENDING HOLE FIELD
               //TODO: PUT FIELD AND LABEL ON SAME LINE
               global.fieldLabel('Ending Hole:'),
-              global.formField(),
+              global.formField(
+                  controller: fldController,
+                  actions: global.getFieldValue(fldController, endHole)),
               global.hrzSpacer(30.0),
+              //START ROUND AND CREATE NEW COURSE
               global.hrzButton('Start Round', context),
             ],
           ),

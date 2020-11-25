@@ -1,6 +1,3 @@
 class Course {
-  String name;
-  String description;
-  int startHole;
-  int endHole;
+  Course(name, {String desc, int start, int end});
 }
