@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:reach_back/Course.dart';
 import 'Hole.dart';
@@ -28,6 +30,30 @@ class MyApp extends StatelessWidget {
   }
 }
 
+class HrzButton extends StatelessWidget {
+  final label;
+  final VoidCallback onPress;
+  HrzButton(this.label, this.onPress);
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: double.infinity,
+      height: 40.0,
+      child: RaisedButton(
+        color: Theme.of(context).buttonColor,
+        disabledColor: Theme.of(context).buttonColor,
+        textColor: Colors.white,
+        child: Text(
+          label,
+          style: TextStyle(fontSize: 20),
+        ),
+        onPressed: onPress,
+      ),
+    );
+  }
+}
+
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
   final String title;
@@ -50,11 +76,11 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: Image.asset('images/ReachBackLogo.png'),
               ),
               global.hrzSpacer(40.0),
-              global.hrzButton('New Round', context,
-                  actions: [global.buttonNav(context, CourseForm())]),
+              HrzButton('New Round', () {
+                global.buttonNav(context, () => CourseForm());
+              }),
               global.hrzSpacer(40.0),
-              global.hrzButton('Continue Previous Round', context,
-                  actions: [null])
+              HrzButton('Continue Previous Round', () {})
             ],
           ),
         ),
@@ -73,6 +99,7 @@ class CourseForm extends StatefulWidget {
 //NEW COURSE FORM
 class CourseFormState extends State<CourseForm> {
   //VARIABLES
+  FocusNode formFocusNode;
   final _formKey = GlobalKey<FormState>();
   final fldController = TextEditingController();
   String courseName;
@@ -81,13 +108,32 @@ class CourseFormState extends State<CourseForm> {
   int endHole;
 
   //FUNCTIONS
-  createCourse() {
+  createCourse(nav) {
     var newCourse = new Course(courseName,
         desc: description, start: startHole, end: endHole);
+    bool validate = _formKey.currentState.validate();
+    if (validate) {
+      global.buttonNav(context, () => nav);
+    }
+    ;
   }
 
   @override
-  void dispose() {
+  void initState() {
+    super.initState();
+
+    formFocusNode = FocusNode();
+  }
+
+  @override
+  void disposeFocusNode() {
+    formFocusNode.dispose();
+
+    super.dispose();
+  }
+
+  @override
+  void disposeController() {
     // Clean up the controller when the widget is disposed.
     fldController.dispose();
     super.dispose();
@@ -112,6 +158,7 @@ class CourseFormState extends State<CourseForm> {
               global.fieldLabel('Course Name:'),
               global.formField(
                   controller: fldController,
+                  focusNode: formFocusNode,
                   actions: global.getFieldValue(fldController, courseName)),
               global.hrzSpacer(45.0),
               //DESCRIPTION FIELD
@@ -119,6 +166,7 @@ class CourseFormState extends State<CourseForm> {
               global.formField(
                   hintTxt: "Weather, how you're feeling, etc...",
                   controller: fldController,
+                  focusNode: formFocusNode,
                   actions: global.getFieldValue(fldController, description)),
               global.hrzSpacer(45.0),
               //STARTING HOLE FIELD
@@ -126,6 +174,7 @@ class CourseFormState extends State<CourseForm> {
               global.fieldLabel('Starting Hole:'),
               global.formField(
                   controller: fldController,
+                  focusNode: formFocusNode,
                   actions: global.getFieldValue(fldController, startHole)),
               global.hrzSpacer(45.0),
               //ENDING HOLE FIELD
@@ -133,14 +182,30 @@ class CourseFormState extends State<CourseForm> {
               global.fieldLabel('Ending Hole:'),
               global.formField(
                   controller: fldController,
+                  focusNode: formFocusNode,
                   actions: global.getFieldValue(fldController, endHole)),
               global.hrzSpacer(30.0),
               //START ROUND AND CREATE NEW COURSE
-              global.hrzButton('Start Round', context),
+              HrzButton('Start Round', () {
+                createCourse(ScoreCard());
+              }),
             ],
           ),
         ),
       ),
     );
+  }
+}
+
+class ScoreCard extends StatefulWidget {
+  @override
+  ScoreCardState createState() {
+    return ScoreCardState();
+  }
+}
+
+class ScoreCardState extends State<ScoreCard> {
+  Widget build(BuildContext context) {
+    return SafeArea();
   }
 }

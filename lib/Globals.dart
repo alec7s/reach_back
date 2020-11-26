@@ -9,28 +9,10 @@ Widget hrzSpacer(double h) {
   );
 }
 
-buttonNav(context, Widget wdg) {
-  Navigator.of(context).push(MaterialPageRoute(builder: (context) => wdg));
-}
-
-Widget hrzButton(String label, BuildContext context, {List actions}) {
-  return Container(
-    width: double.infinity,
-    height: 40.0,
-    child: RaisedButton(
-      color: Theme.of(context).buttonColor,
-      disabledColor: Theme.of(context).buttonColor,
-      onPressed: () {
-        actions.forEach((value) => value);
-      },
-      child: Text(
-        label,
-        style: TextStyle(fontSize: 20),
-      ),
-      textColor: Colors.white,
-      disabledTextColor: Colors.white,
-    ),
-  );
+buttonNav(context, Widget Function() createPage) {
+  Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+    return createPage();
+  }));
 }
 
 Widget fieldLabel(String labelTxt) {
@@ -42,27 +24,31 @@ Widget fieldLabel(String labelTxt) {
   );
 }
 
-Widget formField({String hintTxt, controller, List actions}) {
+Widget formField({String hintTxt, controller, focusNode, List actions}) {
   return Container(
     color: Colors.white70,
     height: 40.0,
     width: double.infinity,
-    child: TextFormField(
-      controller: controller,
-      onChanged: (text) {
-        actions.forEach((value) => value);
-      },
-      validator: (value) {
-        if (value.isEmpty) {
-          return 'Please enter some text';
-        }
-        return null;
-      },
-      //TODO: REFERENCE THEME COLOR
-      style: TextStyle(color: Colors.white),
-      decoration: InputDecoration(
-        fillColor: Colors.white,
-        labelText: hintTxt,
+    child: SizedBox(
+      child: TextFormField(
+        controller: controller,
+        onTap: () => focusNode.requestFocus(),
+        onChanged: (text) {
+          actions.forEach((value) => value);
+        },
+        validator: (value) {
+          if (value.isEmpty) {
+            return 'Required.';
+          }
+          return null;
+        },
+        //TODO: REFERENCE THEME COLOR
+        style: TextStyle(
+            color: Colors.black, fontSize: 20.0, fontWeight: FontWeight.normal),
+        decoration: InputDecoration(
+          fillColor: Colors.white,
+          labelText: hintTxt,
+        ),
       ),
     ),
   );
@@ -70,8 +56,8 @@ Widget formField({String hintTxt, controller, List actions}) {
 
 getFieldValue(final controller, var x) {
   //setState() {
-  if (x != null) {
-    controller.text = x;
+  if (controller.text != null) {
+    x = controller.text;
     //}
   }
 }
