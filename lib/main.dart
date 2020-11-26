@@ -33,6 +33,8 @@ class MyApp extends StatelessWidget {
 class HrzButton extends StatelessWidget {
   final label;
   final VoidCallback onPress;
+  double height;
+  double width;
   HrzButton(this.label, this.onPress);
 
   @override
@@ -67,6 +69,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         backgroundColor: Colors.black,
         body: Center(
           child: Column(
@@ -76,11 +79,17 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: Image.asset('images/ReachBackLogo.png'),
               ),
               global.hrzSpacer(40.0),
-              HrzButton('New Round', () {
-                global.buttonNav(context, () => CourseForm());
-              }),
+              HrzButton(
+                'New Round',
+                () {
+                  global.buttonNav(context, () => CourseForm());
+                },
+              ),
               global.hrzSpacer(40.0),
-              HrzButton('Continue Previous Round', () {})
+              HrzButton(
+                'Continue Previous Round',
+                () {},
+              )
             ],
           ),
         ),
@@ -101,7 +110,7 @@ class CourseFormState extends State<CourseForm> {
   //VARIABLES
   FocusNode formFocusNode;
   final _formKey = GlobalKey<FormState>();
-  final fldController = TextEditingController();
+  List<TextEditingController> _fldControllers;
   String courseName;
   String description;
   int startHole;
@@ -115,80 +124,103 @@ class CourseFormState extends State<CourseForm> {
     if (validate) {
       global.buttonNav(context, () => nav);
     }
-    ;
   }
 
   @override
   void initState() {
     super.initState();
-
     formFocusNode = FocusNode();
+    _fldControllers = List<TextEditingController>.generate(
+      4,
+      (index) => TextEditingController(),
+    );
   }
 
   @override
-  void disposeFocusNode() {
+  void dispose() {
     formFocusNode.dispose();
 
     super.dispose();
   }
 
-  @override
-  void disposeController() {
-    // Clean up the controller when the widget is disposed.
-    fldController.dispose();
-    super.dispose();
-  }
+  //@override
+  //void disposeController() {
+  // Clean up the controller when the widget is disposed.
+  //_fldControllers[0].dispose();
+  //super.dispose();
+  //}
 
 //***************************************************
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.black,
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           backgroundColor: Theme.of(context).accentColor,
           title: const Text('Course Information'),
         ),
-        body: Form(
-          key: _formKey,
+        body: SingleChildScrollView(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              global.hrzSpacer(40.0),
-              //COURSE NAME FIELD
-              global.fieldLabel('Course Name:'),
-              global.formField(
-                  controller: fldController,
-                  focusNode: formFocusNode,
-                  actions: global.getFieldValue(fldController, courseName)),
-              global.hrzSpacer(45.0),
-              //DESCRIPTION FIELD
-              global.fieldLabel('Description:'),
-              global.formField(
-                  hintTxt: "Weather, how you're feeling, etc...",
-                  controller: fldController,
-                  focusNode: formFocusNode,
-                  actions: global.getFieldValue(fldController, description)),
-              global.hrzSpacer(45.0),
-              //STARTING HOLE FIELD
-              //TODO: PUT FIELD AND LABEL ON SAME LINE
-              global.fieldLabel('Starting Hole:'),
-              global.formField(
-                  controller: fldController,
-                  focusNode: formFocusNode,
-                  actions: global.getFieldValue(fldController, startHole)),
-              global.hrzSpacer(45.0),
-              //ENDING HOLE FIELD
-              //TODO: PUT FIELD AND LABEL ON SAME LINE
-              global.fieldLabel('Ending Hole:'),
-              global.formField(
-                  controller: fldController,
-                  focusNode: formFocusNode,
-                  actions: global.getFieldValue(fldController, endHole)),
-              global.hrzSpacer(30.0),
-              //START ROUND AND CREATE NEW COURSE
-              HrzButton('Start Round', () {
-                createCourse(ScoreCard());
-              }),
+              Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    global.hrzSpacer(40.0),
+                    //COURSE NAME FIELD
+                    global.fieldLabel('Course Name:'),
+                    global.formField(
+                        controller: _fldControllers[0],
+                        focusNode: formFocusNode,
+                        actions: global.getFieldValue(
+                            _fldControllers[0], courseName),
+                        width: double.infinity),
+                    global.hrzSpacer(45.0),
+                    //DESCRIPTION FIELD
+                    global.fieldLabel('Description:'),
+                    global.formField(
+                        hintTxt: "Weather, how you're feeling, etc...",
+                        controller: _fldControllers[1],
+                        focusNode: formFocusNode,
+                        actions: global.getFieldValue(
+                            _fldControllers[1], description),
+                        width: double.infinity),
+                    global.hrzSpacer(45.0),
+                    //STARTING HOLE FIELD
+                    //TODO: PUT FIELD AND LABEL ON SAME LINE
+                    global.fieldLabel('Starting Hole:'),
+                    global.formField(
+                        controller: _fldControllers[2],
+                        focusNode: formFocusNode,
+                        actions:
+                            global.getFieldValue(_fldControllers[2], startHole),
+                        width: double.infinity),
+                    global.hrzSpacer(45.0),
+                    //ENDING HOLE FIELD
+                    //TODO: PUT FIELD AND LABEL ON SAME LINE
+                    global.fieldLabel('Ending Hole:'),
+                    global.formField(
+                        controller: _fldControllers[3],
+                        focusNode: formFocusNode,
+                        actions:
+                            global.getFieldValue(_fldControllers[3], endHole),
+                        width: double.infinity),
+                    global.hrzSpacer(45.0),
+                    //START ROUND AND CREATE NEW COURSE
+                    HrzButton(
+                      'Start Round',
+                      () {
+                        createCourse(
+                          ScoreCard(),
+                        );
+                      },
+                    ),
+                    global.hrzSpacer(global.flexHeight(context))
+                  ],
+                ),
+              ),
             ],
           ),
         ),

@@ -24,11 +24,12 @@ Widget fieldLabel(String labelTxt) {
   );
 }
 
-Widget formField({String hintTxt, controller, focusNode, List actions}) {
+Widget formField(
+    {String hintTxt, controller, focusNode, List actions, double width}) {
   return Container(
     color: Colors.white70,
     height: 40.0,
-    width: double.infinity,
+    width: width,
     child: SizedBox(
       child: TextFormField(
         controller: controller,
@@ -48,6 +49,7 @@ Widget formField({String hintTxt, controller, focusNode, List actions}) {
         decoration: InputDecoration(
           fillColor: Colors.white,
           labelText: hintTxt,
+          floatingLabelBehavior: FloatingLabelBehavior.never,
         ),
       ),
     ),
@@ -60,4 +62,8 @@ getFieldValue(final controller, var x) {
     x = controller.text;
     //}
   }
+}
+
+double flexHeight(BuildContext context) {
+  return MediaQuery.of(context).size.height * 0.6;
 }
