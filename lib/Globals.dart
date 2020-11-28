@@ -11,6 +11,7 @@ Widget hrzSpacer(double h) {
 
 buttonNav(context, Widget Function() createPage) {
   Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+    print('Create new page');
     return createPage();
   }));
 }
@@ -25,7 +26,12 @@ Widget fieldLabel(String labelTxt) {
 }
 
 Widget formField(
-    {String hintTxt, controller, focusNode, List actions, double width}) {
+    {String hintTxt,
+    controller,
+    focusNode,
+    List actions,
+    double width,
+    var contVal}) {
   return Container(
     color: Colors.white70,
     height: 40.0,
@@ -57,10 +63,8 @@ Widget formField(
 }
 
 getFieldValue(final controller, var x) {
-  //setState() {
   if (controller.text != null) {
-    x = controller.text;
-    //}
+    controller.text = x;
   }
 }
 

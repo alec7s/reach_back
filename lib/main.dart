@@ -117,12 +117,23 @@ class CourseFormState extends State<CourseForm> {
   int endHole;
 
   //FUNCTIONS
-  createCourse(nav) {
+  createCourse(nav, List contValues, List controllers) {
+    for (var i = 0; i < contValues.length; i++) {
+      setState(() {
+        contValues[i] = controllers[i];
+      });
+    }
     var newCourse = new Course(courseName,
         desc: description, start: startHole, end: endHole);
-    bool validate = _formKey.currentState.validate();
-    if (validate) {
+    if (_formKey.currentState.validate()) {
+      print(
+          'Form Validated [Course: $courseName, Description: $description, Starting hole: $startHole, Ending hole: $endHole]');
+      for (int i = 0; i < _fldControllers.length; i++) {
+        print(_fldControllers[i].text);
+      }
       global.buttonNav(context, () => nav);
+    } else {
+      print('Validation error');
     }
   }
 
@@ -174,9 +185,8 @@ class CourseFormState extends State<CourseForm> {
                     global.formField(
                         controller: _fldControllers[0],
                         focusNode: formFocusNode,
-                        actions: global.getFieldValue(
-                            _fldControllers[0], courseName),
-                        width: double.infinity),
+                        width: double.infinity,
+                        contVal: courseName),
                     global.hrzSpacer(45.0),
                     //DESCRIPTION FIELD
                     global.fieldLabel('Description:'),
@@ -213,8 +223,9 @@ class CourseFormState extends State<CourseForm> {
                       'Start Round',
                       () {
                         createCourse(
-                          ScoreCard(),
-                        );
+                            ScoreCard(),
+                            [courseName, description, startHole, endHole],
+                            _fldControllers);
                       },
                     ),
                     global.hrzSpacer(global.flexHeight(context))
@@ -238,6 +249,10 @@ class ScoreCard extends StatefulWidget {
 
 class ScoreCardState extends State<ScoreCard> {
   Widget build(BuildContext context) {
-    return SafeArea();
+    return SafeArea(
+      child: Container(
+        child: Text('Score card'),
+      ),
+    );
   }
 }
