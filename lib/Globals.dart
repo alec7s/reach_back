@@ -31,13 +31,14 @@ Widget formField(
     focusNode,
     List actions,
     double width,
-    var contVal}) {
+    keyboard}) {
   return Container(
     color: Colors.white70,
     height: 40.0,
     width: width,
     child: SizedBox(
       child: TextFormField(
+        keyboardType: keyboard,
         controller: controller,
         onTap: () => focusNode.requestFocus(),
         onChanged: (text) {

@@ -118,16 +118,19 @@ class CourseFormState extends State<CourseForm> {
 
   //FUNCTIONS
   createCourse(nav, List contValues, List controllers) {
-    for (var i = 0; i < contValues.length; i++) {
-      setState(() {
-        contValues[i] = controllers[i];
-      });
-    }
-    var newCourse = new Course(courseName,
-        desc: description, start: startHole, end: endHole);
     if (_formKey.currentState.validate()) {
-      print(
-          'Form Validated [Course: $courseName, Description: $description, Starting hole: $startHole, Ending hole: $endHole]');
+      print('Form Validated');
+      setState(() {
+        for (var i = 0; i < contValues.length; i++) {
+          contValues[i] = controllers[i];
+        }
+      });
+      Course newCourse = Course(
+        _fldControllers[0].text,
+        desc: _fldControllers[1].text,
+        start: int.parse(_fldControllers[2].text),
+        end: int.parse(_fldControllers[3].text),
+      );
       for (int i = 0; i < _fldControllers.length; i++) {
         print(_fldControllers[i].text);
       }
@@ -185,8 +188,7 @@ class CourseFormState extends State<CourseForm> {
                     global.formField(
                         controller: _fldControllers[0],
                         focusNode: formFocusNode,
-                        width: double.infinity,
-                        contVal: courseName),
+                        width: double.infinity),
                     global.hrzSpacer(45.0),
                     //DESCRIPTION FIELD
                     global.fieldLabel('Description:'),
@@ -202,6 +204,7 @@ class CourseFormState extends State<CourseForm> {
                     //TODO: PUT FIELD AND LABEL ON SAME LINE
                     global.fieldLabel('Starting Hole:'),
                     global.formField(
+                        keyboard: TextInputType.number,
                         controller: _fldControllers[2],
                         focusNode: formFocusNode,
                         actions:
@@ -212,6 +215,7 @@ class CourseFormState extends State<CourseForm> {
                     //TODO: PUT FIELD AND LABEL ON SAME LINE
                     global.fieldLabel('Ending Hole:'),
                     global.formField(
+                        keyboard: TextInputType.number,
                         controller: _fldControllers[3],
                         focusNode: formFocusNode,
                         actions:
@@ -250,8 +254,12 @@ class ScoreCard extends StatefulWidget {
 class ScoreCardState extends State<ScoreCard> {
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Container(
-        child: Text('Score card'),
+      child: Scaffold(
+        backgroundColor: Theme.of(context).primaryColor,
+        appBar: AppBar(
+          backgroundColor: Theme.of(context).accentColor,
+        ),
+        body: Text('Score card'),
       ),
     );
   }
