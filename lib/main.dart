@@ -1,5 +1,6 @@
 import 'dart:ffi';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:reach_back/Course.dart';
 import 'Hole.dart';
@@ -125,7 +126,7 @@ class CourseFormState extends State<CourseForm> {
           contValues[i] = controllers[i];
         }
       });
-      Course newCourse = Course(
+      global.newCourse = Course(
         _fldControllers[0].text,
         desc: _fldControllers[1].text,
         start: int.parse(_fldControllers[2].text),
@@ -255,11 +256,37 @@ class ScoreCardState extends State<ScoreCard> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Theme.of(context).primaryColor,
+        resizeToAvoidBottomInset: false,
+        backgroundColor: Colors.black,
         appBar: AppBar(
           backgroundColor: Theme.of(context).accentColor,
+          title: Text(global.newCourse.getName()),
         ),
-        body: Text('Score card'),
+        body: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              Container(
+                  width: double.infinity,
+                  height: MediaQuery.of(context).size.height * 0.2,
+                  padding: EdgeInsets.symmetric(vertical: 40.0),
+                  child: Text(
+                    'Hole 1',
+                    style: TextStyle(fontSize: 40.0, color: Colors.white),
+                    textAlign: TextAlign.center,
+                  )),
+              Container(
+                width: double.infinity,
+                height: MediaQuery.of(context).size.height * 0.5,
+                //TODO: MAKE FIELD FILL CONTAINER
+                child: TextFormField(),
+              ),
+              Container(
+                width: double.infinity,
+                height: MediaQuery.of(context).size.height * 0.2,
+              )
+            ],
+          ),
+        ),
       ),
     );
   }

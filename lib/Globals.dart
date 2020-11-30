@@ -2,6 +2,8 @@ library global;
 
 import 'package:flutter/material.dart';
 
+var newCourse;
+
 Widget hrzSpacer(double h) {
   return Container(
     width: double.infinity,
