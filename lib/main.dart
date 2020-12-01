@@ -2,6 +2,7 @@ import 'dart:ffi';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:reach_back/Course.dart';
 import 'Hole.dart';
 import 'Globals.dart' as global;
@@ -31,12 +32,12 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class HrzButton extends StatelessWidget {
+class Button extends StatelessWidget {
   final label;
   final VoidCallback onPress;
   double height;
   double width;
-  HrzButton(this.label, this.onPress);
+  Button(this.label, this.onPress);
 
   @override
   Widget build(BuildContext context) {
@@ -80,14 +81,14 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: Image.asset('images/ReachBackLogo.png'),
               ),
               global.hrzSpacer(40.0),
-              HrzButton(
+              Button(
                 'New Round',
                 () {
                   global.buttonNav(context, () => CourseForm());
                 },
               ),
               global.hrzSpacer(40.0),
-              HrzButton(
+              Button(
                 'Continue Previous Round',
                 () {},
               )
@@ -172,7 +173,7 @@ class CourseFormState extends State<CourseForm> {
         backgroundColor: Colors.black,
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
-          backgroundColor: Theme.of(context).accentColor,
+          backgroundColor: Theme.of(context).accentColor.withOpacity(0.9),
           title: const Text('Course Information'),
         ),
         body: SingleChildScrollView(
@@ -224,7 +225,7 @@ class CourseFormState extends State<CourseForm> {
                         width: double.infinity),
                     global.hrzSpacer(45.0),
                     //START ROUND AND CREATE NEW COURSE
-                    HrzButton(
+                    Button(
                       'Start Round',
                       () {
                         createCourse(
@@ -259,30 +260,108 @@ class ScoreCardState extends State<ScoreCard> {
         resizeToAvoidBottomInset: false,
         backgroundColor: Colors.black,
         appBar: AppBar(
-          backgroundColor: Theme.of(context).accentColor,
+          backgroundColor: Theme.of(context).accentColor.withOpacity(0.9),
           title: Text(global.newCourse.getName()),
         ),
         body: SingleChildScrollView(
           child: Column(
             children: <Widget>[
-              Container(
-                  width: double.infinity,
-                  height: MediaQuery.of(context).size.height * 0.2,
-                  padding: EdgeInsets.symmetric(vertical: 40.0),
-                  child: Text(
-                    'Hole 1',
-                    style: TextStyle(fontSize: 40.0, color: Colors.white),
-                    textAlign: TextAlign.center,
-                  )),
+              global.hrzSpacer(15.0),
               Container(
                 width: double.infinity,
-                height: MediaQuery.of(context).size.height * 0.5,
-                //TODO: MAKE FIELD FILL CONTAINER
-                child: TextFormField(),
+                height: MediaQuery.of(context).size.height * 0.08,
+                child: Text(
+                  'Hole',
+                  style: TextStyle(
+                      letterSpacing: 6.0,
+                      fontSize: 40.0,
+                      color: Colors.white70,
+                      fontWeight: FontWeight.w100),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              Container(
+                width: double.infinity,
+                height: MediaQuery.of(context).size.height * 0.06,
+                child: Text(
+                  '1',
+                  style: TextStyle(
+                      fontSize: 40.0,
+                      color: Theme.of(context).accentColor.withOpacity(0.5),
+                      fontWeight: FontWeight.w800),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              SizedBox(
+                  height: 20.0,
+                  width: 140.0,
+                  child: Divider(color: Colors.white70)),
+              Container(
+                margin: EdgeInsets.fromLTRB(30.0, 5.0, 30.0, 5),
+                color: Colors.grey[900].withOpacity(0.5),
+                width: double.infinity,
+                height: MediaQuery.of(context).size.height * 0.48,
+                child: TextField(
+                  inputFormatters: [LengthLimitingTextInputFormatter(2)],
+                  keyboardType: TextInputType.number,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 280.0,
+                      fontWeight: FontWeight.w100),
+                  decoration: InputDecoration.collapsed(
+                    //TODO: CHANGE HINT TEXT TO '0'
+                    hintText: '##',
+                    hintStyle: TextStyle(
+                        color: Colors.white38,
+                        letterSpacing: 10.0,
+                        fontSize: 280.0,
+                        fontWeight: FontWeight.w100),
+                    floatingLabelBehavior: FloatingLabelBehavior.never,
+                  ),
+                ),
               ),
               Container(
                 width: double.infinity,
                 height: MediaQuery.of(context).size.height * 0.2,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    //TODO: HIDE BACK BUTTON ON HOLE 1
+                    //BACK
+                    //TODO: MOVE ARROW BUTTONS TO SIDES OF HOLE LABEL
+                    //TODO: ADD PLUS/MINUS BUTTONS IN PLACE OF ARROWS
+                    Container(
+                      height: MediaQuery.of(context).size.height * 0.2,
+                      width: 140.0,
+                      child: IconButton(
+                        alignment: Alignment.center,
+                        icon: Icon(
+                          Icons.arrow_back_ios_rounded,
+                          color: Colors.white70.withOpacity(0.5),
+                          size: 110.0,
+                        ),
+                      ),
+                    ),
+                    //FORWARD
+                    SizedBox(
+                      height: 80.0,
+                      width: MediaQuery.of(context).size.height * 0.04,
+                    ),
+                    Container(
+                      height: MediaQuery.of(context).size.height * 0.2,
+                      width: 140.0,
+                      child: IconButton(
+                        alignment: Alignment.center,
+                        icon: Icon(
+                          Icons.arrow_forward_ios_rounded,
+                          color: Colors.white70.withOpacity(0.5),
+                          size: 110.0,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               )
             ],
           ),
