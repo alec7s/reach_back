@@ -3,6 +3,19 @@ library global;
 import 'package:flutter/material.dart';
 
 var newCourse;
+int holeNumber;
+
+setHoleNumber() {
+  if (holeNumber == null) {
+    holeNumber = newCourse.start;
+    print('Starting hole: $holeNumber');
+  } else {
+    while (holeNumber <= newCourse.end) {
+      holeNumber++;
+      print('Next hole: $holeNumber');
+    }
+  }
+}
 
 Widget hrzSpacer(double h) {
   return Container(

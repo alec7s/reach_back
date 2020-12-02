@@ -78,7 +78,10 @@ class _MyHomePageState extends State<MyHomePage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Container(
-                child: Image.asset('images/ReachBackLogo.png'),
+                child: CircleAvatar(
+                  radius: MediaQuery.of(context).size.height * 0.29,
+                  backgroundImage: AssetImage('images/ReachBackLogo.png'),
+                ),
               ),
               global.hrzSpacer(40.0),
               Button(
@@ -232,6 +235,7 @@ class CourseFormState extends State<CourseForm> {
                             ScoreCard(),
                             [courseName, description, startHole, endHole],
                             _fldControllers);
+                        global.setHoleNumber();
                       },
                     ),
                     global.hrzSpacer(global.flexHeight(context))
@@ -266,59 +270,87 @@ class ScoreCardState extends State<ScoreCard> {
         body: SingleChildScrollView(
           child: Column(
             children: <Widget>[
-              global.hrzSpacer(15.0),
-              Container(
-                width: double.infinity,
-                height: MediaQuery.of(context).size.height * 0.08,
-                child: Text(
-                  'Hole',
-                  style: TextStyle(
-                      letterSpacing: 6.0,
-                      fontSize: 40.0,
-                      color: Colors.white70,
-                      fontWeight: FontWeight.w100),
-                  textAlign: TextAlign.center,
-                ),
+              global.hrzSpacer(10.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  //TODO: HIDE BACK BUTTON ON HOLE 1
+                  //BACK TO PREVIOUS HOLE BUTTON
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.2,
+                    width: 100.0,
+                    child: IconButton(
+                      alignment: Alignment.center,
+                      icon: Icon(
+                        Icons.arrow_back_ios_rounded,
+                        color: Colors.white70.withOpacity(0.5),
+                        size: 90.0,
+                      ),
+                    ),
+                  ),
+                  Column(
+                    children: <Widget>[
+                      Container(
+                        width: 140.0,
+                        height: MediaQuery.of(context).size.height * 0.08,
+                        child: Text(
+                          'Hole',
+                          style: TextStyle(
+                              letterSpacing: 6.0,
+                              fontSize: 40.0,
+                              color: Colors.white70,
+                              fontWeight: FontWeight.w100),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                      Container(
+                        width: 140.0,
+                        height: MediaQuery.of(context).size.height * 0.07,
+                        child: Text(
+                          global.holeNumber.toString(),
+                          style: TextStyle(
+                              fontSize: 40.0,
+                              color: Theme.of(context)
+                                  .accentColor
+                                  .withOpacity(0.5),
+                              fontWeight: FontWeight.w800),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                      SizedBox(
+                          height: 12.0,
+                          width: 130.0,
+                          child: Divider(color: Colors.white70)),
+                    ],
+                  ),
+                  //GO TO NEXT HOLE
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.2,
+                    width: 100.0,
+                    child: IconButton(
+                      alignment: Alignment.center,
+                      icon: Icon(
+                        Icons.arrow_forward_ios_rounded,
+                        color: Colors.white70.withOpacity(0.5),
+                        size: 90.0,
+                      ),
+                    ),
+                  ),
+                ],
               ),
               Container(
-                width: double.infinity,
-                height: MediaQuery.of(context).size.height * 0.06,
-                child: Text(
-                  '1',
-                  style: TextStyle(
-                      fontSize: 40.0,
-                      color: Theme.of(context).accentColor.withOpacity(0.5),
-                      fontWeight: FontWeight.w800),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-              SizedBox(
-                  height: 20.0,
-                  width: 140.0,
-                  child: Divider(color: Colors.white70)),
-              Container(
-                margin: EdgeInsets.fromLTRB(30.0, 5.0, 30.0, 5),
+                margin: EdgeInsets.fromLTRB(30.0, 0.0, 30.0, 5),
                 color: Colors.grey[900].withOpacity(0.5),
                 width: double.infinity,
-                height: MediaQuery.of(context).size.height * 0.48,
-                child: TextField(
-                  inputFormatters: [LengthLimitingTextInputFormatter(2)],
-                  keyboardType: TextInputType.number,
+                height: MediaQuery.of(context).size.height * 0.47,
+                child: Text(
+                  '00',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                      color: Colors.white,
+                      color: Colors.white38,
                       fontSize: 280.0,
-                      fontWeight: FontWeight.w100),
-                  decoration: InputDecoration.collapsed(
-                    //TODO: CHANGE HINT TEXT TO '0'
-                    hintText: '##',
-                    hintStyle: TextStyle(
-                        color: Colors.white38,
-                        letterSpacing: 10.0,
-                        fontSize: 280.0,
-                        fontWeight: FontWeight.w100),
-                    floatingLabelBehavior: FloatingLabelBehavior.never,
-                  ),
+                      fontWeight: FontWeight.w100,
+                      letterSpacing: 10.0),
                 ),
               ),
               Container(
@@ -327,9 +359,6 @@ class ScoreCardState extends State<ScoreCard> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    //TODO: HIDE BACK BUTTON ON HOLE 1
-                    //BACK
-                    //TODO: MOVE ARROW BUTTONS TO SIDES OF HOLE LABEL
                     //TODO: ADD PLUS/MINUS BUTTONS IN PLACE OF ARROWS
                     Container(
                       height: MediaQuery.of(context).size.height * 0.2,
@@ -337,16 +366,15 @@ class ScoreCardState extends State<ScoreCard> {
                       child: IconButton(
                         alignment: Alignment.center,
                         icon: Icon(
-                          Icons.arrow_back_ios_rounded,
+                          Icons.remove,
                           color: Colors.white70.withOpacity(0.5),
-                          size: 110.0,
+                          size: 120.0,
                         ),
                       ),
                     ),
-                    //FORWARD
                     SizedBox(
-                      height: 80.0,
-                      width: MediaQuery.of(context).size.height * 0.04,
+                      height: MediaQuery.of(context).size.height * 0.2,
+                      width: MediaQuery.of(context).size.height * 0.1,
                     ),
                     Container(
                       height: MediaQuery.of(context).size.height * 0.2,
@@ -354,9 +382,9 @@ class ScoreCardState extends State<ScoreCard> {
                       child: IconButton(
                         alignment: Alignment.center,
                         icon: Icon(
-                          Icons.arrow_forward_ios_rounded,
+                          Icons.add,
                           color: Colors.white70.withOpacity(0.5),
-                          size: 110.0,
+                          size: 120.0,
                         ),
                       ),
                     ),
