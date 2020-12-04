@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:reach_back/Globals.dart' as global;
+import 'package:reach_back/globals.dart' as global;
 
 class ScoreCard extends StatefulWidget {
   @override
@@ -32,7 +32,7 @@ class ScoreCardState extends State<ScoreCard> {
         body: SingleChildScrollView(
           child: Column(
             children: <Widget>[
-              global.hrzSpacer(10.0),
+              global.vrtSpacer(10.0),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[

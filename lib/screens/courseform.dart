@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:reach_back/Globals.dart' as global;
+import 'package:reach_back/globals.dart' as global;
 import 'package:reach_back/models/Course.dart';
-import 'package:reach_back/main.dart';
-import 'package:reach_back/screens/ScoreCard.dart';
+import 'package:reach_back/screens/scorecard.dart';
+import 'package:reach_back/components/WideButton.dart';
+import 'package:reach_back/components/formfield.dart';
 
 class CourseForm extends StatefulWidget {
   @override
@@ -15,7 +16,6 @@ class CourseForm extends StatefulWidget {
 //NEW COURSE FORM
 class CourseFormState extends State<CourseForm> {
   //VARIABLES
-  FocusNode formFocusNode;
   final _formKey = GlobalKey<FormState>();
   List<TextEditingController> _fldControllers;
   String courseName;
@@ -24,14 +24,9 @@ class CourseFormState extends State<CourseForm> {
   int endHole;
 
   //FUNCTIONS
-  createCourse(nav, List contValues, List controllers) {
+  createCourse(nav, List controllers) {
     if (_formKey.currentState.validate()) {
       print('Form Validated');
-      setState(() {
-        for (var i = 0; i < contValues.length; i++) {
-          contValues[i] = controllers[i];
-        }
-      });
       global.newCourse = Course(
         _fldControllers[0].text,
         desc: _fldControllers[1].text,
@@ -50,7 +45,6 @@ class CourseFormState extends State<CourseForm> {
   @override
   void initState() {
     super.initState();
-    formFocusNode = FocusNode();
     _fldControllers = List<TextEditingController>.generate(
       4,
       (index) => TextEditingController(),
@@ -59,17 +53,12 @@ class CourseFormState extends State<CourseForm> {
 
   @override
   void dispose() {
-    formFocusNode.dispose();
-
+    // Clean up the controller when the widget is disposed.
+    for (var i = 0; i <= _fldControllers.length; i++) {
+      _fldControllers[i].dispose();
+    }
     super.dispose();
   }
-
-  //@override
-  //void disposeController() {
-  // Clean up the controller when the widget is disposed.
-  //_fldControllers[0].dispose();
-  //super.dispose();
-  //}
 
 //***************************************************
   Widget build(BuildContext context) {
@@ -89,58 +78,53 @@ class CourseFormState extends State<CourseForm> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    global.hrzSpacer(40.0),
-                    //COURSE NAME FIELD
+                    global.vrtSpacer(40.0),
                     global.fieldLabel('Course Name:'),
-                    global.formField(
-                        controller: _fldControllers[0],
-                        focusNode: formFocusNode,
-                        width: double.infinity),
-                    global.hrzSpacer(45.0),
-                    //DESCRIPTION FIELD
+                    FormField(
+                        width: double.infinity, controller: _fldControllers[0]),
+                    global.vrtSpacer(45.0),
                     global.fieldLabel('Description:'),
-                    global.formField(
+                    formField(
                         hintTxt: "Weather, how you're feeling, etc...",
                         controller: _fldControllers[1],
                         focusNode: formFocusNode,
                         actions: global.getFieldValue(
                             _fldControllers[1], description),
                         width: double.infinity),
-                    global.hrzSpacer(45.0),
-                    //STARTING HOLE FIELD
+                    global.vrtSpacer(45.0),
+                    //vrtSpacerHOLE FIELD
                     //TODO: PUT FIELD AND LABEL ON SAME LINE
                     global.fieldLabel('Starting Hole:'),
-                    global.formField(
+                    formField(
                         keyboard: TextInputType.number,
                         controller: _fldControllers[2],
                         focusNode: formFocusNode,
                         actions:
                             global.getFieldValue(_fldControllers[2], startHole),
                         width: double.infinity),
-                    global.hrzSpacer(45.0),
-                    //ENDING HOLE FIELD
+                    global.vrtSpacer(45.0),
+                    //vrtSpacerLE FIELD
                     //TODO: PUT FIELD AND LABEL ON SAME LINE
                     global.fieldLabel('Ending Hole:'),
-                    global.formField(
+                    formField(
                         keyboard: TextInputType.number,
                         controller: _fldControllers[3],
                         focusNode: formFocusNode,
                         actions:
                             global.getFieldValue(_fldControllers[3], endHole),
                         width: double.infinity),
-                    global.hrzSpacer(45.0),
-                    //START ROUND AND CREATE NEW COURSE
-                    Button(
+                    global.vrtSpacer(45.0),
+                    //vrtSpacerND AND CREATE NEW COURSE
+                    WideButton(
                       'Start Round',
                       () {
-                        createCourse(
-                            ScoreCard(),
-                            [courseName, description, startHole, endHole],
-                            _fldControllers);
+                        createCourse(ScoreCard(), _fldControllers);
                         global.setHoleNumber();
                       },
                     ),
-                    global.hrzSpacer(global.flexHeight(context))
+                    global.vrtSpacer(
+                      global.flexHeight(context),
+                    ),
                   ],
                 ),
               ),
