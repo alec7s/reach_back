@@ -2,40 +2,27 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class FormField extends StatefulWidget {
+class CourseFormField extends StatelessWidget {
   final double width;
-  final String hintTxt;
-  final ValueChanged onChange;
   final TextEditingController controller;
-  final TextInputType keyboard;
+  final ValueChanged onChange;
+  String hintTxt;
+  TextInputType keyboard;
 
-  const FormField(
-      {Key key,
-      @required this.width,
-      @required this.controller,
-      this.keyboard,
-      this.hintTxt,
-      this.onChange})
-      : super(key: key);
+  CourseFormField(this.width, this.controller,
+      {this.keyboard, this.hintTxt, this.onChange});
 
-  @override
-  FormFieldState createState() {
-    return FormFieldState();
-  }
-}
-
-class FormFieldState extends State<FormField> {
   @override
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white70,
       height: 40.0,
-      width: widget.width,
+      width: width,
       child: SizedBox(
         child: TextFormField(
-          keyboardType: widget.keyboard,
-          controller: widget.controller,
-          onChanged: widget.onChange,
+          keyboardType: keyboard,
+          controller: controller,
+          onChanged: onChange,
           validator: (value) {
             if (value.isEmpty) {
               return 'Required.';
@@ -49,7 +36,7 @@ class FormFieldState extends State<FormField> {
               fontWeight: FontWeight.normal),
           decoration: InputDecoration(
             fillColor: Colors.white,
-            labelText: widget.hintTxt,
+            labelText: hintTxt,
             floatingLabelBehavior: FloatingLabelBehavior.never,
           ),
         ),

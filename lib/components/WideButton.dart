@@ -4,8 +4,7 @@ import 'package:flutter/material.dart';
 class WideButton extends StatelessWidget {
   final String label;
   final VoidCallback onPress;
-  //final double height;
-  //final double width;
+
   WideButton(this.label, this.onPress);
 
   @override

@@ -80,39 +80,28 @@ class CourseFormState extends State<CourseForm> {
                   children: <Widget>[
                     global.vrtSpacer(40.0),
                     global.fieldLabel('Course Name:'),
-                    FormField(
-                        width: double.infinity, controller: _fldControllers[0]),
+                    CourseFormField(double.infinity, _fldControllers[0]),
                     global.vrtSpacer(45.0),
                     global.fieldLabel('Description:'),
-                    formField(
-                        hintTxt: "Weather, how you're feeling, etc...",
-                        controller: _fldControllers[1],
-                        focusNode: formFocusNode,
-                        actions: global.getFieldValue(
-                            _fldControllers[1], description),
-                        width: double.infinity),
+                    CourseFormField(double.infinity, _fldControllers[1]),
                     global.vrtSpacer(45.0),
                     //vrtSpacerHOLE FIELD
                     //TODO: PUT FIELD AND LABEL ON SAME LINE
                     global.fieldLabel('Starting Hole:'),
-                    formField(
-                        keyboard: TextInputType.number,
-                        controller: _fldControllers[2],
-                        focusNode: formFocusNode,
-                        actions:
-                            global.getFieldValue(_fldControllers[2], startHole),
-                        width: double.infinity),
+                    CourseFormField(
+                      double.infinity,
+                      _fldControllers[2],
+                      keyboard: TextInputType.number,
+                    ),
                     global.vrtSpacer(45.0),
                     //vrtSpacerLE FIELD
                     //TODO: PUT FIELD AND LABEL ON SAME LINE
                     global.fieldLabel('Ending Hole:'),
-                    formField(
-                        keyboard: TextInputType.number,
-                        controller: _fldControllers[3],
-                        focusNode: formFocusNode,
-                        actions:
-                            global.getFieldValue(_fldControllers[3], endHole),
-                        width: double.infinity),
+                    CourseFormField(
+                      double.infinity,
+                      _fldControllers[3],
+                      keyboard: TextInputType.number,
+                    ),
                     global.vrtSpacer(45.0),
                     //vrtSpacerND AND CREATE NEW COURSE
                     WideButton(

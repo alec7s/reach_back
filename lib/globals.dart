@@ -8,18 +8,6 @@ var newCourse;
 int holeNumber;
 //*******************************************
 //FUNCTIONS
-setHoleNumber() {
-  if (holeNumber == null) {
-    holeNumber = newCourse.start;
-    print('Starting hole: $holeNumber');
-  } else {
-    while (holeNumber <= newCourse.end) {
-      holeNumber++;
-      print('Next hole: $holeNumber');
-    }
-  }
-}
-
 buttonNav(context, Widget Function() createPage) {
   Navigator.of(context).push(MaterialPageRoute(builder: (context) {
     print('Create new page');
@@ -35,6 +23,18 @@ getFieldValue(final controller, var x) {
 
 double flexHeight(BuildContext context) {
   return MediaQuery.of(context).size.height * 0.6;
+}
+
+setHoleNumber() {
+  if (holeNumber == null) {
+    holeNumber = newCourse.start;
+    print('Starting hole: $holeNumber');
+  } else {
+    if (holeNumber <= newCourse.end) {
+      holeNumber++;
+      print('Next hole: $holeNumber');
+    }
+  }
 }
 
 //*******************************************

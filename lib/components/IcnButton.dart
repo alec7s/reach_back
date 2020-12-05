@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 class IcnButton extends StatelessWidget {
   final IconData icon;
   final double size;
-  IcnButton(this.icon, this.size);
+  final VoidCallback onPress;
+  IcnButton(this.icon, this.size, this.onPress);
 
   @override
   Widget build(BuildContext context) {
@@ -15,6 +16,7 @@ class IcnButton extends StatelessWidget {
         color: Colors.white70.withOpacity(0.5),
         size: size,
       ),
+      onPressed: onPress,
     );
   }
 }

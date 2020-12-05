@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:reach_back/components/IcnButton.dart';
 import 'package:reach_back/globals.dart' as global;
 
 class ScoreCard extends StatefulWidget {
@@ -11,6 +12,7 @@ class ScoreCard extends StatefulWidget {
 
 class ScoreCardState extends State<ScoreCard> {
   int score = 0;
+
   Color scoreColor;
   Color setScoreColor() {
     if (score == 0) {
@@ -41,13 +43,17 @@ class ScoreCardState extends State<ScoreCard> {
                   Container(
                     height: MediaQuery.of(context).size.height * 0.2,
                     width: 100.0,
-                    child: IconButton(
-                      alignment: Alignment.center,
-                      icon: Icon(
-                        Icons.arrow_back_ios_rounded,
-                        color: Colors.white70.withOpacity(0.5),
-                        size: 90.0,
-                      ),
+                    child: IcnButton(
+                      Icons.arrow_back_ios_rounded,
+                      90.0,
+                      () {
+                        setState(
+                          () {
+                            score = 0;
+                            global.holeNumber--;
+                          },
+                        );
+                      },
                     ),
                   ),
                   Column(
@@ -87,13 +93,17 @@ class ScoreCardState extends State<ScoreCard> {
                   Container(
                     height: MediaQuery.of(context).size.height * 0.2,
                     width: 100.0,
-                    child: IconButton(
-                      alignment: Alignment.center,
-                      icon: Icon(
-                        Icons.arrow_forward_ios_rounded,
-                        color: Colors.white70.withOpacity(0.5),
-                        size: 90.0,
-                      ),
+                    child: IcnButton(
+                      Icons.arrow_forward_ios_rounded,
+                      90.0,
+                      () {
+                        setState(
+                          () {
+                            score = 0;
+                            global.setHoleNumber();
+                          },
+                        );
+                      },
                     ),
                   ),
                 ],
@@ -119,18 +129,21 @@ class ScoreCardState extends State<ScoreCard> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
+                    //SUBTRACT SCORE BUTTON
                     Container(
                       height: MediaQuery.of(context).size.height * 0.2,
                       width: 140.0,
-                      child: IconButton(
-                        alignment: Alignment.center,
-                        icon: Icon(
-                          Icons.remove,
-                          color: Colors.white70.withOpacity(0.5),
-                          size: 120.0,
-                        ),
-                        onPressed: () {
-                          score++;
+                      child: IcnButton(
+                        Icons.remove,
+                        120.0,
+                        () {
+                          setState(
+                            () {
+                              if (score > 0) {
+                                score--;
+                              }
+                            },
+                          );
                         },
                       ),
                     ),
@@ -138,20 +151,19 @@ class ScoreCardState extends State<ScoreCard> {
                       height: MediaQuery.of(context).size.height * 0.2,
                       width: MediaQuery.of(context).size.height * 0.1,
                     ),
+                    //ADD SCORE BUTTON
                     Container(
                       height: MediaQuery.of(context).size.height * 0.2,
                       width: 140.0,
-                      child: IconButton(
-                        alignment: Alignment.center,
-                        icon: Icon(
-                          Icons.add,
-                          color: Colors.white70.withOpacity(0.5),
-                          size: 120.0,
-                        ),
-                        onPressed: () {
-                          if (score > 0) {
-                            score--;
-                          }
+                      child: IcnButton(
+                        Icons.add,
+                        120.0,
+                        () {
+                          setState(
+                            () {
+                              score++;
+                            },
+                          );
                         },
                       ),
                     ),
