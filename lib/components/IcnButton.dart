@@ -5,7 +5,8 @@ class IcnButton extends StatelessWidget {
   final IconData icon;
   final double size;
   final VoidCallback onPress;
-  IcnButton(this.icon, this.size, this.onPress);
+  final Color color;
+  IcnButton(this.icon, this.size, this.color, this.onPress);
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +14,7 @@ class IcnButton extends StatelessWidget {
       alignment: Alignment.center,
       icon: Icon(
         icon,
-        color: Colors.white70.withOpacity(0.5),
+        color: color,
         size: size,
       ),
       onPressed: onPress,

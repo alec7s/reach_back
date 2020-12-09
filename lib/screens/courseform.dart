@@ -29,13 +29,10 @@ class CourseFormState extends State<CourseForm> {
       print('Form Validated');
       global.newCourse = Course(
         _fldControllers[0].text,
-        desc: _fldControllers[1].text,
-        start: int.parse(_fldControllers[2].text),
-        end: int.parse(_fldControllers[3].text),
+        _fldControllers[1].text,
+        int.parse(_fldControllers[2].text),
+        int.parse(_fldControllers[3].text),
       );
-      for (int i = 0; i < _fldControllers.length; i++) {
-        print(_fldControllers[i].text);
-      }
       global.buttonNav(context, () => nav);
     } else {
       print('Validation error');
@@ -108,7 +105,7 @@ class CourseFormState extends State<CourseForm> {
                       'Start Round',
                       () {
                         createCourse(ScoreCard(), _fldControllers);
-                        global.setHoleNumber();
+                        //global.setHoleNumber('next');
                       },
                     ),
                     global.vrtSpacer(

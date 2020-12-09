@@ -12,13 +12,35 @@ class ScoreCard extends StatefulWidget {
 
 class ScoreCardState extends State<ScoreCard> {
   int score = 0;
-
+  //int hole = global.newCourse.getHoleNumber();
+  Color holeBackColor = Colors.white70.withOpacity(0.1);
   Color scoreColor;
+
+  setHole() {
+    //hole = global.newCourse.getHoleNumber();
+  }
+
   Color setScoreColor() {
     if (score == 0) {
       return scoreColor = Colors.white38;
     } else {
       return scoreColor = Theme.of(context).accentColor;
+    }
+  }
+
+  Color setMinusButtonColor() {
+    if (score == 0) {
+      return Colors.white70.withOpacity(0.1);
+    } else {
+      return Colors.white70.withOpacity(0.5);
+    }
+  }
+
+  setHoleBackColor() {
+    if (global.holeIndex == 0) {
+      holeBackColor = Colors.white70.withOpacity(0.1);
+    } else {
+      holeBackColor = Colors.white70.withOpacity(0.5);
     }
   }
 
@@ -38,7 +60,6 @@ class ScoreCardState extends State<ScoreCard> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  //TODO: HIDE BACK BUTTON ON HOLE 1
                   //BACK TO PREVIOUS HOLE BUTTON
                   Container(
                     height: MediaQuery.of(context).size.height * 0.2,
@@ -46,11 +67,14 @@ class ScoreCardState extends State<ScoreCard> {
                     child: IcnButton(
                       Icons.arrow_back_ios_rounded,
                       90.0,
+                      holeBackColor,
+                      //ON PRESSED
                       () {
                         setState(
                           () {
                             score = 0;
-                            global.holeNumber--;
+                            global.setHoleNumber('back');
+                            setHoleBackColor();
                           },
                         );
                       },
@@ -75,7 +99,9 @@ class ScoreCardState extends State<ScoreCard> {
                         width: 140.0,
                         height: MediaQuery.of(context).size.height * 0.07,
                         child: Text(
-                          global.holeNumber.toString(),
+                          global.newCourse
+                              .getHoleNumber(global.holeIndex)
+                              .toString(),
                           style: TextStyle(
                               fontSize: 40.0,
                               color: Colors.white.withOpacity(0.8),
@@ -96,11 +122,12 @@ class ScoreCardState extends State<ScoreCard> {
                     child: IcnButton(
                       Icons.arrow_forward_ios_rounded,
                       90.0,
+                      Colors.white70.withOpacity(0.5),
                       () {
                         setState(
                           () {
                             score = 0;
-                            global.setHoleNumber();
+                            global.setHoleNumber('next');
                           },
                         );
                       },
@@ -136,6 +163,7 @@ class ScoreCardState extends State<ScoreCard> {
                       child: IcnButton(
                         Icons.remove,
                         120.0,
+                        setMinusButtonColor(),
                         () {
                           setState(
                             () {
@@ -158,6 +186,7 @@ class ScoreCardState extends State<ScoreCard> {
                       child: IcnButton(
                         Icons.add,
                         120.0,
+                        Colors.white70.withOpacity(0.5),
                         () {
                           setState(
                             () {
