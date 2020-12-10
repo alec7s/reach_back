@@ -11,13 +11,30 @@ class ScoreCard extends StatefulWidget {
 }
 
 class ScoreCardState extends State<ScoreCard> {
-  int score = 0;
-  //int hole = global.newCourse.getHoleNumber();
-  Color holeBackColor = Colors.white70.withOpacity(0.1);
+  int holeIndex;
+  int hole;
+  Color _holeBackColor;
+  int score;
   Color scoreColor;
 
-  setHole() {
-    //hole = global.newCourse.getHoleNumber();
+  void setHoleNumber(String direction) {
+    if (direction == 'next') {
+      if ((hole + 1) <= global.newCourse.getEndHole()) {
+        hole++;
+      }
+    } else if (direction == 'back') {
+      if ((hole - 1) >= global.newCourse.getStartHole()) {
+        hole--;
+      }
+    } else {
+      hole = hole;
+    }
+    print('New hole #: ' + hole.toString());
+  }
+
+  getScoreValue() {
+    score = global.newCourse.getScore(hole);
+    print(global.newCourse.getScore(hole).toString());
   }
 
   Color setScoreColor() {
@@ -37,11 +54,25 @@ class ScoreCardState extends State<ScoreCard> {
   }
 
   setHoleBackColor() {
-    if (global.holeIndex == 0) {
-      holeBackColor = Colors.white70.withOpacity(0.1);
+    if (hole == global.newCourse.getStartHole()) {
+      _holeBackColor = Colors.white70.withOpacity(0.1);
     } else {
-      holeBackColor = Colors.white70.withOpacity(0.5);
+      _holeBackColor = Colors.white70.withOpacity(0.5);
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    holeIndex = 0;
+    hole = global.newCourse.getStartHole();
+    _holeBackColor = Colors.white70.withOpacity(0.1);
+    score = global.newCourse.getScore(global.newCourse.getStartHole());
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   Widget build(BuildContext context) {
@@ -67,14 +98,15 @@ class ScoreCardState extends State<ScoreCard> {
                     child: IcnButton(
                       Icons.arrow_back_ios_rounded,
                       90.0,
-                      holeBackColor,
+                      _holeBackColor,
                       //ON PRESSED
                       () {
                         setState(
                           () {
-                            score = 0;
-                            global.setHoleNumber('back');
+                            //score = 0;
+                            setHoleNumber('back');
                             setHoleBackColor();
+                            getScoreValue();
                           },
                         );
                       },
@@ -99,9 +131,7 @@ class ScoreCardState extends State<ScoreCard> {
                         width: 140.0,
                         height: MediaQuery.of(context).size.height * 0.07,
                         child: Text(
-                          global.newCourse
-                              .getHoleNumber(global.holeIndex)
-                              .toString(),
+                          hole.toString(),
                           style: TextStyle(
                               fontSize: 40.0,
                               color: Colors.white.withOpacity(0.8),
@@ -126,8 +156,10 @@ class ScoreCardState extends State<ScoreCard> {
                       () {
                         setState(
                           () {
-                            score = 0;
-                            global.setHoleNumber('next');
+                            //score = 0;
+                            setHoleNumber('next');
+                            setHoleBackColor();
+                            getScoreValue();
                           },
                         );
                       },
