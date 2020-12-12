@@ -15,7 +15,7 @@ class Course {
     //SET HOLE NUMBERS FOR SCORE CARD USING START/END
     _holeNumbers = [for (var i = start; i <= end; i++) i];
     _scores = [for (var i = 0; i < _holeNumbers.length; i++) 0];
-    setScoreMap();
+    //setScoreMap();
     print(
       '''name: $name\n
     desc: $desc\n
@@ -34,15 +34,13 @@ class Course {
   int getHoleNumber(index) => _holeNumbers[index];
   int getHoleNumbersLen() => _holeNumbers.length;
   String getName() => this.name;
-  int getScore(int key) {
-    return _scoreMap[key];
-  }
+  int getScore(int index) => _scores[index];
 
   //SETTERS
-  setScoreMap() {
-    LinkedHashMap<int, int> _scoreMap =
-        Map.fromIterables(_holeNumbers, _scores);
-  }
+  //setScoreMap() {
+  //LinkedHashMap<int, int> _scoreMap =
+  //  Map.fromIterables(_holeNumbers, _scores);
+  // }
 
   setScore(int holeNum, int score) {
     _scoreMap.value[holeNum] = score;

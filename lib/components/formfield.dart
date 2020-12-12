@@ -32,9 +32,10 @@ class CourseFormField extends StatelessWidget {
           //TODO: REFERENCE THEME COLOR
           style: TextStyle(
               color: Colors.black,
-              fontSize: 20.0,
+              fontSize: 25.0,
               fontWeight: FontWeight.normal),
           decoration: InputDecoration(
+            contentPadding: EdgeInsets.all(5.0),
             fillColor: Colors.white,
             labelText: hintTxt,
             floatingLabelBehavior: FloatingLabelBehavior.never,

@@ -29,7 +29,7 @@ class ScoreCardState extends State<ScoreCard> {
     } else {
       hole = hole;
     }
-    print('New hole #: ' + hole.toString());
+    print('hole #: ' + hole.toString());
   }
 
   getScoreValue() {
@@ -190,11 +190,11 @@ class ScoreCardState extends State<ScoreCard> {
                   children: <Widget>[
                     //SUBTRACT SCORE BUTTON
                     Container(
-                      height: MediaQuery.of(context).size.height * 0.2,
+                      height: MediaQuery.of(context).size.height * 0.16,
                       width: 140.0,
                       child: IcnButton(
                         Icons.remove,
-                        120.0,
+                        100.0,
                         setMinusButtonColor(),
                         () {
                           setState(
@@ -217,7 +217,7 @@ class ScoreCardState extends State<ScoreCard> {
                       width: 140.0,
                       child: IcnButton(
                         Icons.add,
-                        120.0,
+                        100.0,
                         Colors.white70.withOpacity(0.5),
                         () {
                           setState(
