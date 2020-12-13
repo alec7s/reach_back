@@ -9,7 +9,7 @@ class Course {
   var _holeNumbers;
   var _scores;
 
-  Course(this.name, this.desc, this.start, this.end) {
+  Course(this.name, this.start, this.end) {
     //SET HOLE NUMBERS FOR SCORE CARD USING START/END
     _holeNumbers = [for (var i = this.start; i <= this.end; i++) i];
     _scores = [for (var i = 0; i < (this._holeNumbers.length); i++) 0];
