@@ -1,49 +1,54 @@
-import 'dart:collection';
-
-import 'package:reach_back/globals.dart' as global;
+//import 'package:reach_back/globals.dart' as global;
 
 class Course {
   String name;
   String desc;
   int start;
   int end;
-  var _scoreMap;
+  //var _scoreMap;
   var _holeNumbers;
   var _scores;
 
   Course(this.name, this.desc, this.start, this.end) {
     //SET HOLE NUMBERS FOR SCORE CARD USING START/END
-    _holeNumbers = [for (var i = start; i <= end; i++) i];
-    _scores = [for (var i = 0; i < _holeNumbers.length; i++) 0];
+    _holeNumbers = [for (var i = this.start; i <= this.end; i++) i];
+    _scores = [for (var i = 0; i < (this._holeNumbers.length); i++) 0];
     //setScoreMap();
     print(
-      '''name: $name\n
-    desc: $desc\n
-    start: $start\n
-    end: $end\n
+      ''' name: $name
+    desc: $desc
+    start: $start
+    end: $end
     hole numbers: ''' +
           _holeNumbers.toString() +
           '\n' +
           'scores: ' +
-          _scores.toString(),
+          _scores.toString() +
+          '\n' +
+          'hole #: ' +
+          start.toString(),
     );
   }
   //GETTERS
   int getStartHole() => _holeNumbers[0];
   int getEndHole() => _holeNumbers[_holeNumbers.length - 1];
-  int getHoleNumber(index) => _holeNumbers[index];
+  int getHoleNumber(index) => _holeNumbers[index - 1];
   int getHoleNumbersLen() => _holeNumbers.length;
   String getName() => this.name;
   int getScore(int index) => _scores[index];
 
   //SETTERS
   //setScoreMap() {
-  //LinkedHashMap<int, int> _scoreMap =
-  //  Map.fromIterables(_holeNumbers, _scores);
-  // }
+  //Map<int, int> _scoreMap = Map.fromIterables(_holeNumbers, _scores);
+  //}
 
-  setScore(int holeNum, int score) {
-    _scoreMap.value[holeNum] = score;
-    print(_scoreMap.toString());
+  setScore(int index, int score) {
+    _scores[index - 1] = score;
+
+    print('score: $score');
+    print('Saved score (' +
+        _scores[index - 1].toString() +
+        ') for hole #' +
+        _holeNumbers[index - 1].toString());
   }
 }
