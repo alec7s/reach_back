@@ -1,5 +1,3 @@
-//import 'package:reach_back/globals.dart' as global;
-
 class Course {
   String name;
   String desc;
@@ -36,6 +34,8 @@ class Course {
   int getHoleNumbersLen() => _holeNumbers.length;
   String getName() => this.name;
   int getScore(int index) => _scores[index];
+  List<int> getScoreList() => _scores;
+  List<int> getHoleNumList() => _holeNumbers;
 
   //SETTERS
   //setScoreMap() {
