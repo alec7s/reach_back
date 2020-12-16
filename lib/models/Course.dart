@@ -28,9 +28,9 @@ class Course {
     );
   }
   //GETTERS
-  int getStartHole() => _holeNumbers[0];
-  int getEndHole() => _holeNumbers[_holeNumbers.length - 1];
-  int getHoleNumber(index) => _holeNumbers[index - 1];
+  int getStartHole() => start;
+  int getEndHole() => end;
+  int getHoleNumber(index) => _holeNumbers[index];
   int getHoleNumbersLen() => _holeNumbers.length;
   String getName() => this.name;
   int getScore(int index) => _scores[index];

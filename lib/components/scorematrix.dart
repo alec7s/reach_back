@@ -6,53 +6,50 @@ class ScoreMatrix extends StatelessWidget {
   ScoreMatrix();
 
   createTableRow(int index) {
-    return TableRow(children: [
-      Text(
-        global.newCourse.getHoleNumber(index).toString(),
-        style: TextStyle(color: Colors.white, fontSize: 25.0),
+    print('hole: ' + global.newCourse.getHoleNumber(index).toString());
+    print('score: ' + global.newCourse.getScore(index).toString());
+    return DataRow(cells: <DataCell>[
+      DataCell(
+        Text(
+          global.newCourse.getHoleNumber(index).toString(),
+          style: TextStyle(color: Colors.white, fontSize: 25.0),
+        ),
       ),
-      Text(
-        global.newCourse.getScore(index).toString(),
-        style: TextStyle(color: Colors.white, fontSize: 25.0),
+      DataCell(
+        Text(
+          global.newCourse.getScore(index).toString(),
+          style: TextStyle(color: Colors.white, fontSize: 25.0),
+        ),
       ),
     ]);
   }
 
   generateMatrix() {
+    List<DataRow> rowList = new List(global.newCourse.getHoleNumbersLen());
     for (var i = 0; i < global.newCourse.getHoleNumbersLen(); i++) {
-      createTableRow(i);
+      rowList[i] = createTableRow(i);
     }
+    return rowList;
   }
 
   @override
   Widget build(BuildContext context) {
-    return Table(
-      columnWidths: {
-        0: FlexColumnWidth(10.0),
-        1: FlexColumnWidth(10.0),
-      },
-      border: TableBorder.all(width: 1.0, color: Colors.white),
-      defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-      children: [
-        TableRow(children: [
-          Container(
-            alignment: Alignment.center,
-            padding: EdgeInsets.fromLTRB(0.0, 3.0, 0.0, 3.0),
-            child: Text(
-              'Hole',
-              style: TextStyle(color: Colors.white, fontSize: 25.0),
-            ),
+    return DataTable(
+      columns: const <DataColumn>[
+        DataColumn(
+          label: Text(
+            'Hole',
+            style: TextStyle(fontSize: 25.0, color: Colors.white),
           ),
-          Container(
-            alignment: Alignment.center,
-            child: Text(
-              'Score',
-              style: TextStyle(color: Colors.white, fontSize: 25.0),
-            ),
+        ),
+        DataColumn(
+          label: Text(
+            'Score',
+            style: TextStyle(fontSize: 25.0, color: Colors.white),
           ),
-          generateMatrix(),
-        ]),
+        ),
       ],
+      rows: generateMatrix(),
     );
   }
 }
