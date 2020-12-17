@@ -172,6 +172,7 @@ class ScoreCardState extends State<ScoreCard> {
                               setHoleBackColor();
                               getScoreValue();
                             } else {
+                              global.newCourse.setScore(hole, score);
                               global.buttonNav(
                                 context,
                                 () => ScoreTable(),

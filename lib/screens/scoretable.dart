@@ -29,7 +29,11 @@ class ScoreTableState extends State<ScoreTable> {
                 alignment: Alignment.center,
                 child: Text(
                   'Round Summary',
-                  style: TextStyle(color: Colors.white, fontSize: 40.0),
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 40.0,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
               ),
               ScoreMatrix(),
