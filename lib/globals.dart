@@ -1,5 +1,6 @@
 library global;
 
+import 'package:overlay_support/overlay_support.dart';
 import 'package:flutter/material.dart';
 
 //*******************************************
@@ -22,7 +23,7 @@ getFieldValue(final controller, var x) {
 }
 
 double flexHeight(BuildContext context) {
-  return MediaQuery.of(context).size.height * 0.6;
+  return MediaQuery.of(context).size.height * 0.1;
 }
 
 //*******************************************
@@ -40,5 +41,18 @@ Widget fieldLabel(String labelTxt) {
       labelTxt,
       style: TextStyle(fontSize: 35, color: Colors.white),
     ),
+  );
+}
+
+OverlaySupportEntry constraintNotifier(String msgText) {
+  return showSimpleNotification(
+    Text(
+      msgText,
+      style: TextStyle(
+        fontSize: 25.0,
+        color: Colors.redAccent,
+      ),
+    ),
+    background: Colors.black,
   );
 }

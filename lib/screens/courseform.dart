@@ -228,9 +228,6 @@ class CourseFormState extends State<CourseForm> {
                         //global.setHoleNumber('next');
                       },
                     ),
-                    global.vrtSpacer(
-                      global.flexHeight(context),
-                    ),
                   ],
                 ),
               ),

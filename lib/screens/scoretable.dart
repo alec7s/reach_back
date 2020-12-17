@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:overlay_support/overlay_support.dart';
+import 'package:reach_back/components/WideButton.dart';
 import 'package:reach_back/components/scorematrix.dart';
 import 'package:reach_back/globals.dart' as global;
+import 'package:reach_back/screens/homepage.dart';
 
 class ScoreTable extends StatefulWidget {
   @override
@@ -11,6 +14,18 @@ class ScoreTable extends StatefulWidget {
 }
 
 class ScoreTableState extends State<ScoreTable> {
+  int validateScores() {
+    int result = 0;
+    for (int score in global.newCourse.getScoreList()) {
+      if (score == 0) {
+        global.constraintNotifier('Scores cannot be zero');
+        result = 1;
+        break;
+      }
+    }
+    return result;
+  }
+
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
@@ -37,6 +52,19 @@ class ScoreTableState extends State<ScoreTable> {
                 ),
               ),
               ScoreMatrix(),
+              SizedBox(
+                height: 30.0,
+              ),
+              WideButton('Save',
+                  //ON PRESSED
+                  () {
+                if (validateScores() == 0) {
+                  global.buttonNav(context, () => HomePage());
+                }
+              }),
+              global.vrtSpacer(
+                global.flexHeight(context),
+              ),
             ],
           ),
         ),
