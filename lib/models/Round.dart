@@ -1,20 +1,23 @@
-class Course {
+import 'dart:math';
+
+import 'package:reach_back/db/db.dart';
+
+class Round {
+  int id;
   String name;
-  String desc;
   int start;
   int end;
   //var _scoreMap;
   var _holeNumbers;
   var _scores;
+  Random random = new Random();
 
-  Course(this.name, this.start, this.end) {
-    //SET HOLE NUMBERS FOR SCORE CARD USING START/END
+  Round(this.name, this.start, this.end) {
     _holeNumbers = [for (var i = this.start; i <= this.end; i++) i];
     _scores = [for (var i = 0; i < (this._holeNumbers.length); i++) 0];
     //setScoreMap();
     print(
       ''' name: $name
-    desc: $desc
     start: $start
     end: $end
     hole numbers: ''' +
@@ -27,6 +30,18 @@ class Course {
           start.toString(),
     );
   }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'name': name,
+      'start': start,
+      'end': end,
+      'holes': _holeNumbers,
+      'scores': _scores
+    };
+  }
+
   //GETTERS
   int getStartHole() => start;
   int getEndHole() => end;

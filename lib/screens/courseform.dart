@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:reach_back/components/IcnButton.dart';
 import 'package:reach_back/globals.dart' as global;
-import 'package:reach_back/models/Course.dart';
+import 'package:reach_back/models/Round.dart';
 import 'package:reach_back/screens/scorecard.dart';
 import 'package:reach_back/components/WideButton.dart';
 import 'package:reach_back/components/formfield.dart';
@@ -76,7 +76,7 @@ class CourseFormState extends State<CourseForm> {
         (inputStart != 0) &&
         (inputEnd >= inputStart)) {
       print('Form validated');
-      global.newCourse = Course(
+      global.newCourse = Round(
         _fldController.text,
         inputStart,
         inputEnd,
