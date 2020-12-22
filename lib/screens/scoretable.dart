@@ -63,6 +63,7 @@ class ScoreTableState extends State<ScoreTable> {
                   //ON PRESSED
                   () {
                 if (validateScores() == 0) {
+                  global.newCourse.setFinalScore();
                   db.insertRound(global.newCourse);
                   global.buttonNav(context, () => HomePage());
                 }

@@ -92,7 +92,6 @@ class ScoreMatrix extends StatelessWidget {
                   color: Colors.white,
                   fontWeight: FontWeight.w500,
                 ),
-                textAlign: TextAlign.center,
               ),
             ),
             DataColumn(
@@ -103,7 +102,6 @@ class ScoreMatrix extends StatelessWidget {
                   color: Colors.white,
                   fontWeight: FontWeight.w500,
                 ),
-                textAlign: TextAlign.center,
               ),
             ),
           ],

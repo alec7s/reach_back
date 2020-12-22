@@ -29,18 +29,23 @@ class _HomePageState extends State<HomePage> {
                   backgroundImage: AssetImage('images/ReachBackLogo.png'),
                 ),
               ),
-              global.vrtSpacer(40.0),
+              SizedBox(height: 40.0),
               WideButton(
-                'New Round',
+                'New round',
                 () {
                   global.buttonNav(context, () => CourseForm());
                 },
               ),
-              global.vrtSpacer(40.0),
+              SizedBox(height: 40.0),
               WideButton(
-                'Continue Previous Round',
+                'Beat your score',
                 () {},
-              )
+              ),
+              SizedBox(height: 40.0),
+              WideButton(
+                'View previous rounds',
+                () {},
+              ),
             ],
           ),
         ),

@@ -8,23 +8,32 @@ class Round {
   int start;
   int end;
   //var _scoreMap;
-  var _holeNumbers;
-  var _scores;
+  var holeNumbers;
+  var scores;
   Random random = new Random();
+  DateTime now;
+  String dateYmd;
+  int finalScore = 0;
 
-  Round(this.name, this.start, this.end) {
-    _holeNumbers = [for (var i = this.start; i <= this.end; i++) i];
-    _scores = [for (var i = 0; i < (this._holeNumbers.length); i++) 0];
+  Round(this.name, this.start, this.end, {this.id}) {
+    now = new DateTime.now();
+    dateYmd =
+        "${now.year.toString()}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}";
+
+    holeNumbers = [for (var i = this.start; i <= this.end; i++) i];
+    scores = [for (var i = 0; i < (this.holeNumbers.length); i++) 0];
     //setScoreMap();
     print(
-      ''' name: $name
+      '''
+    date: $dateYmd, 
+    name: $name
     start: $start
     end: $end
     hole numbers: ''' +
-          _holeNumbers.toString() +
+          holeNumbers.toString() +
           '\n' +
           'scores: ' +
-          _scores.toString() +
+          scores.toString() +
           '\n' +
           'hole #: ' +
           start.toString(),
@@ -37,20 +46,21 @@ class Round {
       'name': name,
       'start': start,
       'end': end,
-      'holes': _holeNumbers,
-      'scores': _scores
+      'holes': holeNumbers,
+      'scores': scores
     };
   }
 
   //GETTERS
   int getStartHole() => start;
   int getEndHole() => end;
-  int getHoleNumber(index) => _holeNumbers[index];
-  int getHoleNumbersLen() => _holeNumbers.length;
+  int getHoleNumber(index) => holeNumbers[index];
+  int getHoleNumbersLen() => holeNumbers.length;
   String getName() => this.name;
-  int getScore(int index) => _scores[index];
-  List<int> getScoreList() => _scores;
-  List<int> getHoleNumList() => _holeNumbers;
+  int getScore(int index) => scores[index];
+  List<int> getScoreList() => scores;
+  List<int> getHoleNumList() => holeNumbers;
+  getFinalScore() => finalScore;
 
   //SETTERS
   //setScoreMap() {
@@ -58,12 +68,14 @@ class Round {
   //}
 
   setScore(int index, int score) {
-    _scores[index - 1] = score;
+    scores[index - 1] = score;
 
     print('score: $score');
     print('Saved score (' +
-        _scores[index - 1].toString() +
+        scores[index - 1].toString() +
         ') for hole #' +
-        _holeNumbers[index - 1].toString());
+        holeNumbers[index - 1].toString());
   }
+
+  setFinalScore() => finalScore = scores.reduce((int a, int b) => a + b);
 }
