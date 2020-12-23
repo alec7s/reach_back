@@ -2,8 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class RoundHistory extends StatelessWidget {
-  createDataRow() {}
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(

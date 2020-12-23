@@ -15,7 +15,7 @@ class Db {
         return db.execute(
           //TODO: ADD REMAINING COLUMNS
           //TODO: FIND WAY TO UPLOAD LIST INTO DB? PERHAPS SECOND TABLE IS NEEDED
-          'CREATE TABLE rounds(id INTEGER PRIMARY KEY, name TEXT, start INTEGER, end INTEGER)',
+          'CREATE TABLE rounds(id INTEGER PRIMARY KEY, dateYmd TEXT, name TEXT, start INTEGER, end INTEGER, finalScore INTEGER)',
         );
       },
       version: 1,
@@ -37,12 +37,12 @@ class Db {
       maps.length,
       (i) {
         return Round(
-          //TODO: ENSURE CORRECT DATA ITEMS ARE RETURNED (CURRENTLY INCOMPLETE)
-          maps[i]['name'],
-          maps[i]['start'],
-          maps[i]['end'],
-          id: maps[i]['id'],
-        );
+            //TODO: ENSURE CORRECT DATA ITEMS ARE RETURNED (CURRENTLY INCOMPLETE)
+            maps[i]['name'],
+            maps[i]['start'],
+            maps[i]['end'],
+            id: maps[i]['id'],
+            finalScore: maps[i]['finalScore']);
       },
     );
   }

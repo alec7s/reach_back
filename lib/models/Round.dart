@@ -10,16 +10,14 @@ class Round {
   //var _scoreMap;
   var holeNumbers;
   var scores;
-  Random random = new Random();
   DateTime now;
   String dateYmd;
   int finalScore = 0;
 
-  Round(this.name, this.start, this.end, {this.id}) {
+  Round(this.name, this.start, this.end, {this.id, this.finalScore}) {
     now = new DateTime.now();
     dateYmd =
         "${now.year.toString()}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}";
-
     holeNumbers = [for (var i = this.start; i <= this.end; i++) i];
     scores = [for (var i = 0; i < (this.holeNumbers.length); i++) 0];
     //setScoreMap();
@@ -43,11 +41,11 @@ class Round {
   Map<String, dynamic> toMap() {
     return {
       'id': id,
+      'dateYmd': dateYmd,
       'name': name,
       'start': start,
       'end': end,
-      'holes': holeNumbers,
-      'scores': scores
+      'finalScore': finalScore
     };
   }
 

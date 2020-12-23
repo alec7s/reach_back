@@ -2,17 +2,22 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:reach_back/globals.dart' as global;
+import 'package:reach_back/models/Round.dart';
+import 'package:reach_back/db/db.dart';
 
-class ScoreMatrix extends StatelessWidget {
-  ScoreMatrix();
+Db db = Db();
 
-  createDataRow(int index) {
+class RoundMatrix extends StatelessWidget {
+  RoundMatrix();
+
+  createDataRow(int index, Round round) {
     return DataRow(
       cells: <DataCell>[
+        //DATE
         DataCell(
           Center(
             child: Text(
-              global.newCourse.getHoleNumber(index).toString(),
+              round.dateYmd,
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 25.0,
@@ -20,10 +25,24 @@ class ScoreMatrix extends StatelessWidget {
             ),
           ),
         ),
+        //COURSE NAME
         DataCell(
           Center(
             child: Text(
-              global.newCourse.getScore(index).toString(),
+              round.name,
+              style: TextStyle(
+                color: Colors.redAccent,
+                fontSize: 25.0,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ),
+        //SCORE
+        DataCell(
+          Center(
+            child: Text(
+              round.finalScore.toString(),
               style: TextStyle(
                 color: Colors.redAccent,
                 fontSize: 25.0,
@@ -36,44 +55,11 @@ class ScoreMatrix extends StatelessWidget {
     );
   }
 
-  createSumRow(int sum) {
-    return DataRow(cells: <DataCell>[
-      DataCell(
-        Center(
-          child: Text(
-            'Total',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 30.0,
-            ),
-          ),
-        ),
-      ),
-      DataCell(
-        Center(
-          child: Text(
-            sum.toString(),
-            style: TextStyle(
-              color: Colors.redAccent,
-              fontSize: 30.0,
-              fontWeight: FontWeight.bold,
-            ),
-            textAlign: TextAlign.center,
-          ),
-        ),
-      ),
-    ]);
-  }
-
-  generateMatrix() {
-    int scoreSum = 0;
-    List<DataRow> rowList = [];
-    var i = 0;
-    for (; i < global.newCourse.getHoleNumbersLen(); i++) {
-      scoreSum += global.newCourse.getScore(i);
-      rowList.add(createDataRow(i));
+  generateMatrix() async {
+    List<Round> rowList = await db.rounds();
+    for (var i = 0; i <= rowList.length; i++) {
+      rowList.add(createDataRow(i, rowList[i]));
     }
-    rowList.add(createSumRow(scoreSum));
     return rowList;
   }
 
@@ -88,7 +74,7 @@ class ScoreMatrix extends StatelessWidget {
           columns: const <DataColumn>[
             DataColumn(
               label: Text(
-                'Hole',
+                'Date',
                 style: TextStyle(
                   fontSize: 30.0,
                   color: Colors.white,
@@ -98,6 +84,18 @@ class ScoreMatrix extends StatelessWidget {
             ),
             DataColumn(
               label: Text(
+                //DISPLAY COURSE NAME IN THIS COLUMN (NAME)
+                'Course',
+                style: TextStyle(
+                  fontSize: 30.0,
+                  color: Colors.white,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ),
+            DataColumn(
+              label: Text(
+                //DISPLAY finalScore IN THIS COLUMN
                 'Score',
                 style: TextStyle(
                   fontSize: 30.0,
