@@ -1,66 +1,85 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
-import 'package:reach_back/globals.dart' as global;
-import 'package:reach_back/models/Round.dart';
-import 'package:reach_back/db/db.dart';
-
-Db db = Db();
 
 class RoundMatrix extends StatelessWidget {
-  RoundMatrix();
+  List<Map<String, dynamic>> data;
+  RoundMatrix(this.data);
 
-  createDataRow(int index, Round round) {
-    return DataRow(
-      cells: <DataCell>[
-        //DATE
-        DataCell(
-          Center(
-            child: Text(
-              round.dateYmd,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 25.0,
+  Widget createMatrix(context) {
+    if (data != null) {
+      List<Widget> rows = [];
+      for (var i = 0; i < data.length; i++) {
+        String date = data[i]['date'];
+        String name = data[i]['name'];
+        int finalScore = data[i]['finalScore'];
+        rows.add(
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                width: MediaQuery.of(context).size.width * 0.4,
+                child: Center(
+                  child: Text(
+                    date,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 25.0,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
               ),
-            ),
+              Container(
+                width: MediaQuery.of(context).size.width * 0.35,
+                child: Center(
+                  child: Text(
+                    name,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 25.0,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ),
+              Container(
+                width: MediaQuery.of(context).size.width * 0.2,
+                child: Center(
+                  child: Text(
+                    finalScore.toString(),
+                    style: TextStyle(
+                      color: Colors.redAccent,
+                      fontSize: 25.0,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+        rows.add(
+          SizedBox(
+            width: double.infinity,
+            height: 20.0,
+            child: Divider(color: Colors.white),
+          ),
+        );
+      }
+      return Column(children: rows);
+    } else {
+      return Container(
+        child: Text(
+          'No Data',
+          style: TextStyle(
+            fontSize: 30.0,
+            color: Colors.white,
+            fontWeight: FontWeight.w500,
           ),
         ),
-        //COURSE NAME
-        DataCell(
-          Center(
-            child: Text(
-              round.name,
-              style: TextStyle(
-                color: Colors.redAccent,
-                fontSize: 25.0,
-              ),
-              textAlign: TextAlign.center,
-            ),
-          ),
-        ),
-        //SCORE
-        DataCell(
-          Center(
-            child: Text(
-              round.finalScore.toString(),
-              style: TextStyle(
-                color: Colors.redAccent,
-                fontSize: 25.0,
-              ),
-              textAlign: TextAlign.center,
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  generateMatrix() async {
-    List<Round> rowList = await db.rounds();
-    for (var i = 0; i <= rowList.length; i++) {
-      rowList.add(createDataRow(i, rowList[i]));
+      );
     }
-    return rowList;
   }
 
   @override
@@ -70,43 +89,57 @@ class RoundMatrix extends StatelessWidget {
         data: Theme.of(context).copyWith(
           dividerColor: Colors.white,
         ),
-        child: DataTable(
-          columns: const <DataColumn>[
-            DataColumn(
-              label: Text(
-                'Date',
-                style: TextStyle(
-                  fontSize: 30.0,
-                  color: Colors.white,
-                  fontWeight: FontWeight.w500,
+        child: Column(children: [
+          //COLUMN HEADERS
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                alignment: Alignment.center,
+                width: MediaQuery.of(context).size.width * 0.4,
+                child: Text(
+                  'Date',
+                  style: TextStyle(
+                    fontSize: 30.0,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
               ),
-            ),
-            DataColumn(
-              label: Text(
-                //DISPLAY COURSE NAME IN THIS COLUMN (NAME)
-                'Course',
-                style: TextStyle(
-                  fontSize: 30.0,
-                  color: Colors.white,
-                  fontWeight: FontWeight.w500,
+              Container(
+                alignment: Alignment.center,
+                width: MediaQuery.of(context).size.width * 0.35,
+                child: Text(
+                  'Course',
+                  style: TextStyle(
+                    fontSize: 30.0,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
               ),
-            ),
-            DataColumn(
-              label: Text(
-                //DISPLAY finalScore IN THIS COLUMN
-                'Score',
-                style: TextStyle(
-                  fontSize: 30.0,
-                  color: Colors.white,
-                  fontWeight: FontWeight.w500,
+              Container(
+                alignment: Alignment.center,
+                width: MediaQuery.of(context).size.width * 0.2,
+                child: Text(
+                  'Score',
+                  style: TextStyle(
+                    fontSize: 30.0,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
               ),
-            ),
-          ],
-          rows: generateMatrix(),
-        ),
+            ],
+          ),
+          SizedBox(
+            width: double.infinity,
+            height: 20.0,
+            child: Divider(color: Colors.white),
+          ),
+          //ROWS OF EXTRACTED DATA
+          createMatrix(context),
+        ]),
       ),
     );
   }

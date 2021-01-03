@@ -1,6 +1,8 @@
 import 'dart:math';
+import 'dart:convert';
 
-import 'package:reach_back/db/db.dart';
+Round roundFromJson(String str) => Round.fromJson(json.decode(str));
+String userToJson(Round data) => json.encode(data.toJson());
 
 class Round {
   int id;
@@ -14,7 +16,8 @@ class Round {
   String dateYmd;
   int finalScore = 0;
 
-  Round(this.name, this.start, this.end, {this.id, this.finalScore}) {
+  Round(this.name, this.start, this.end,
+      {this.id, this.finalScore, this.dateYmd}) {
     now = new DateTime.now();
     dateYmd =
         "${now.year.toString()}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}";
@@ -38,7 +41,16 @@ class Round {
     );
   }
 
-  Map<String, dynamic> toMap() {
+  factory Round.fromJson(Map<String, dynamic> json) => Round(
+        json['name'],
+        json['start'],
+        json['end'],
+        id: json['id'],
+        finalScore: json['finalScore'],
+        dateYmd: json['dateYmd'],
+      );
+
+  Map<String, dynamic> toJson() {
     return {
       'id': id,
       'dateYmd': dateYmd,

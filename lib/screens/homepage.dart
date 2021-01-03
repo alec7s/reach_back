@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:reach_back/screens/courseform.dart';
 import 'package:reach_back/components/WideButton.dart';
 import 'package:reach_back/globals.dart' as global;
+import 'package:reach_back/screens/roundhistory.dart';
+import 'package:reach_back/db/database_helper.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key, this.title}) : super(key: key);
@@ -32,6 +34,7 @@ class _HomePageState extends State<HomePage> {
               SizedBox(height: 40.0),
               WideButton(
                 'New round',
+                //ON PRESS
                 () {
                   global.buttonNav(context, () => CourseForm());
                 },
@@ -39,12 +42,22 @@ class _HomePageState extends State<HomePage> {
               SizedBox(height: 40.0),
               WideButton(
                 'Beat your score',
+                //ON PRESS
                 () {},
               ),
               SizedBox(height: 40.0),
               WideButton(
                 'View previous rounds',
-                () {},
+                //ON PRESS
+                () async {
+                  List<Map<String, dynamic>> data =
+                      await DatabaseHelper.instance.queryAll();
+                  if (data != null) print('data extracted');
+                  global.buttonNav(
+                    context,
+                    () => RoundHistory(data),
+                  );
+                },
               ),
             ],
           ),

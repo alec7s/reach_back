@@ -2,13 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:reach_back/components/WideButton.dart';
 import 'package:reach_back/components/scorematrix.dart';
+import 'package:reach_back/db/database_helper.dart';
 import 'package:reach_back/globals.dart' as global;
 import 'package:reach_back/screens/homepage.dart';
-import 'package:path/path.dart';
-import 'package:sqflite/sqflite.dart';
-import 'package:reach_back/db/db.dart';
-
-Db db = Db();
+import 'package:reach_back/models/Round.dart';
 
 class ScoreTable extends StatefulWidget {
   @override
@@ -61,10 +58,17 @@ class ScoreTableState extends State<ScoreTable> {
               ),
               WideButton('Save',
                   //ON PRESSED
-                  () {
+                  () async {
                 if (validateScores() == 0) {
                   global.newCourse.setFinalScore();
-                  db.insertRound(global.newCourse);
+                  int i = await DatabaseHelper.instance.insert(
+                    {
+                      'date': global.newCourse.dateYmd,
+                      'name': global.newCourse.name,
+                      'finalScore': global.newCourse.finalScore
+                    },
+                  );
+                  print('Saved course (id = $i)');
                   global.buttonNav(context, () => HomePage());
                 }
               }),
