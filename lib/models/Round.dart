@@ -1,9 +1,3 @@
-import 'dart:math';
-import 'dart:convert';
-
-Round roundFromJson(String str) => Round.fromJson(json.decode(str));
-String userToJson(Round data) => json.encode(data.toJson());
-
 class Round {
   int id;
   String name;
@@ -15,6 +9,7 @@ class Round {
   DateTime now;
   String dateYmd;
   int finalScore = 0;
+  String nameConcat;
 
   Round(this.name, this.start, this.end,
       {this.id, this.finalScore, this.dateYmd}) {
@@ -23,7 +18,8 @@ class Round {
         "${now.year.toString()}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}";
     holeNumbers = [for (var i = this.start; i <= this.end; i++) i];
     scores = [for (var i = 0; i < (this.holeNumbers.length); i++) 0];
-    //setScoreMap();
+    nameConcat = name + ' (#' + start.toString() + '-' + end.toString() + ')';
+    name = nameConcat;
     print(
       '''
     date: $dateYmd, 
@@ -39,26 +35,6 @@ class Round {
           'hole #: ' +
           start.toString(),
     );
-  }
-
-  factory Round.fromJson(Map<String, dynamic> json) => Round(
-        json['name'],
-        json['start'],
-        json['end'],
-        id: json['id'],
-        finalScore: json['finalScore'],
-        dateYmd: json['dateYmd'],
-      );
-
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'dateYmd': dateYmd,
-      'name': name,
-      'start': start,
-      'end': end,
-      'finalScore': finalScore
-    };
   }
 
   //GETTERS

@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:reach_back/screens/courseform.dart';
-import 'package:reach_back/components/WideButton.dart';
-import 'package:reach_back/globals.dart' as global;
-import 'package:reach_back/screens/roundhistory.dart';
-import 'package:reach_back/db/database_helper.dart';
+import 'package:ReachBack/screens/courseform.dart';
+import 'package:ReachBack/components/WideButton.dart';
+import 'package:ReachBack/globals.dart' as global;
+import 'package:ReachBack/screens/roundhistory.dart';
+import 'package:ReachBack/db/database_helper.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key, this.title}) : super(key: key);
@@ -43,16 +43,11 @@ class _HomePageState extends State<HomePage> {
               WideButton(
                 'Beat your score',
                 //ON PRESS
-                () {},
-              ),
-              SizedBox(height: 40.0),
-              WideButton(
-                'View previous rounds',
-                //ON PRESS
                 () async {
                   List<Map<String, dynamic>> data =
                       await DatabaseHelper.instance.queryAll();
                   if (data != null) print('data extracted');
+                  print(data);
                   global.buttonNav(
                     context,
                     () => RoundHistory(data),

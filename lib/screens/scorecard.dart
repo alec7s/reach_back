@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:reach_back/components/IcnButton.dart';
-import 'package:reach_back/globals.dart' as global;
-import 'package:reach_back/screens/scoretable.dart';
+import 'package:ReachBack/components/IcnButton.dart';
+import 'package:ReachBack/globals.dart' as global;
+import 'package:ReachBack/screens/scoretable.dart';
 
 class ScoreCard extends StatefulWidget {
   @override

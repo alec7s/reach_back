@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
-import 'package:reach_back/globals.dart' as global;
+import 'package:ReachBack/globals.dart' as global;
 
 class ScoreMatrix extends StatelessWidget {
   ScoreMatrix();

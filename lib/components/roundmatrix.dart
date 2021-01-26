@@ -18,26 +18,26 @@ class RoundMatrix extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                width: MediaQuery.of(context).size.width * 0.4,
+                width: MediaQuery.of(context).size.width * 0.3,
                 child: Center(
                   child: Text(
                     date,
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 25.0,
+                      fontSize: 18.0,
                     ),
                     textAlign: TextAlign.center,
                   ),
                 ),
               ),
               Container(
-                width: MediaQuery.of(context).size.width * 0.35,
+                width: MediaQuery.of(context).size.width * 0.5,
                 child: Center(
                   child: Text(
                     name,
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 25.0,
+                      fontSize: 18.0,
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -50,7 +50,7 @@ class RoundMatrix extends StatelessWidget {
                     finalScore.toString(),
                     style: TextStyle(
                       color: Colors.redAccent,
-                      fontSize: 25.0,
+                      fontSize: 18.0,
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -96,7 +96,7 @@ class RoundMatrix extends StatelessWidget {
             children: [
               Container(
                 alignment: Alignment.center,
-                width: MediaQuery.of(context).size.width * 0.4,
+                width: MediaQuery.of(context).size.width * 0.3,
                 child: Text(
                   'Date',
                   style: TextStyle(
@@ -108,7 +108,7 @@ class RoundMatrix extends StatelessWidget {
               ),
               Container(
                 alignment: Alignment.center,
-                width: MediaQuery.of(context).size.width * 0.35,
+                width: MediaQuery.of(context).size.width * 0.5,
                 child: Text(
                   'Course',
                   style: TextStyle(

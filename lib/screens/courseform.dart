@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:reach_back/components/IcnButton.dart';
-import 'package:reach_back/globals.dart' as global;
-import 'package:reach_back/models/Round.dart';
-import 'package:reach_back/screens/scorecard.dart';
-import 'package:reach_back/components/WideButton.dart';
-import 'package:reach_back/components/formfield.dart';
+import 'package:ReachBack/components/IcnButton.dart';
+import 'package:ReachBack/globals.dart' as global;
+import 'package:ReachBack/models/Round.dart';
+import 'package:ReachBack/screens/scorecard.dart';
+import 'package:ReachBack/components/WideButton.dart';
+import 'package:ReachBack/components/formfield.dart';
 
 class CourseForm extends StatefulWidget {
   @override
