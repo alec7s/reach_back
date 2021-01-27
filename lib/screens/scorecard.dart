@@ -111,7 +111,7 @@ class ScoreCardState extends State<ScoreCard> {
                         setState(
                           () {
                             if (hole > global.newCourse.getStartHole()) {
-                              global.newCourse.setScore(hole, score);
+                              global.newCourse.setScore(holeIndex, score);
                               setHoleNumber('back');
                               setHoleBackColor();
                               getScoreValue();
@@ -167,12 +167,12 @@ class ScoreCardState extends State<ScoreCard> {
                         setState(
                           () {
                             if (hole < global.newCourse.getEndHole()) {
-                              global.newCourse.setScore(hole, score);
+                              global.newCourse.setScore(holeIndex, score);
                               setHoleNumber('next');
                               setHoleBackColor();
                               getScoreValue();
                             } else {
-                              global.newCourse.setScore(hole, score);
+                              global.newCourse.setScore(holeIndex, score);
                               global.buttonNav(
                                 context,
                                 () => ScoreTable(),

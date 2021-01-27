@@ -54,13 +54,13 @@ class Round {
   //}
 
   setScore(int index, int score) {
-    scores[index - 1] = score;
+    scores[index] = score;
 
     print('score: $score');
     print('Saved score (' +
-        scores[index - 1].toString() +
+        scores[index].toString() +
         ') for hole #' +
-        holeNumbers[index - 1].toString());
+        holeNumbers[index].toString());
   }
 
   setFinalScore() => finalScore = scores.reduce((int a, int b) => a + b);
