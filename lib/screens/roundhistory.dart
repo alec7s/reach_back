@@ -3,11 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:ReachBack/components/roundmatrix.dart';
 import 'package:ReachBack/db/database_helper.dart';
 
-//TODO: CHANGE TO STATEFUL WIDGET
-class RoundHistory extends StatelessWidget {
+class RoundHistory extends StatefulWidget {
   List<Map<String, dynamic>> data;
   RoundHistory(this.data);
 
+  @override
+  RoundHistoryState createState() {
+    return RoundHistoryState();
+  }
+}
+
+class RoundHistoryState extends State<RoundHistory> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -38,9 +44,11 @@ class RoundHistory extends StatelessWidget {
                             TextButton(
                               child: Text('YES'),
                               onPressed: () async {
-                                //TODO: ADD SETSTATE
                                 await DatabaseHelper.instance.deleteAll();
-                                Navigator.of(context).pop();
+                                widget.data = [];
+                                setState(() {
+                                  Navigator.of(context).pop();
+                                });
                               },
                             ),
                             TextButton(
@@ -58,7 +66,7 @@ class RoundHistory extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              RoundMatrix(data),
+              RoundMatrix(widget.data),
             ],
           ),
         ),
