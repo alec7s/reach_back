@@ -28,13 +28,6 @@ double flexHeight(BuildContext context) {
 
 //*******************************************
 //WIDGETS
-Widget vrtSpacer(double h) {
-  return Container(
-    width: double.infinity,
-    height: h,
-  );
-}
-
 Widget fieldLabel(String labelTxt) {
   return Container(
     child: Text(

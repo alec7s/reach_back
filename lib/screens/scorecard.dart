@@ -20,13 +20,13 @@ class ScoreCardState extends State<ScoreCard> {
 
   void setHoleNumber(String direction) {
     if (direction == 'next') {
-      if ((hole + 1) <= global.newCourse.getEndHole()) {
+      if ((hole + 1) <= global.newCourse.end) {
         hole++;
         holeIndex++;
         print('next hole pressed');
       }
     } else if (direction == 'back') {
-      if ((hole - 1) >= global.newCourse.getStartHole()) {
+      if ((hole - 1) >= global.newCourse.start) {
         hole--;
         holeIndex--;
         print('previous hole pressed');
@@ -40,8 +40,7 @@ class ScoreCardState extends State<ScoreCard> {
   }
 
   getScoreValue() {
-    score = global.newCourse.getScore(holeIndex);
-    //print(global.newCourse.getScore(holeIndex).toString());
+    score = global.newCourse.scores[holeIndex];
   }
 
   Color setScoreColor() {
@@ -61,7 +60,7 @@ class ScoreCardState extends State<ScoreCard> {
   }
 
   setHoleBackColor() {
-    if (hole == global.newCourse.getStartHole()) {
+    if (hole == global.newCourse.start) {
       _holeBackColor = Colors.white70.withOpacity(0.1);
     } else {
       _holeBackColor = Colors.white70.withOpacity(0.5);
@@ -72,9 +71,9 @@ class ScoreCardState extends State<ScoreCard> {
   void initState() {
     super.initState();
     holeIndex = 0;
-    hole = global.newCourse.getStartHole();
+    hole = global.newCourse.start;
     _holeBackColor = Colors.white70.withOpacity(0.1);
-    score = global.newCourse.getScore(holeIndex);
+    score = global.newCourse.scores[holeIndex];
   }
 
   @override
@@ -89,12 +88,12 @@ class ScoreCardState extends State<ScoreCard> {
         backgroundColor: Colors.black,
         appBar: AppBar(
           backgroundColor: Theme.of(context).accentColor.withOpacity(0.9),
-          title: Text(global.newCourse.getName()),
+          title: Text(global.newCourse.name),
         ),
         body: SingleChildScrollView(
           child: Column(
             children: <Widget>[
-              global.vrtSpacer(10.0),
+              SizedBox(height: 10.0),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
@@ -110,7 +109,7 @@ class ScoreCardState extends State<ScoreCard> {
                       () {
                         setState(
                           () {
-                            if (hole > global.newCourse.getStartHole()) {
+                            if (hole > global.newCourse.start) {
                               global.newCourse.setScore(holeIndex, score);
                               setHoleNumber('back');
                               setHoleBackColor();
@@ -166,7 +165,7 @@ class ScoreCardState extends State<ScoreCard> {
                       () {
                         setState(
                           () {
-                            if (hole < global.newCourse.getEndHole()) {
+                            if (hole < global.newCourse.end) {
                               global.newCourse.setScore(holeIndex, score);
                               setHoleNumber('next');
                               setHoleBackColor();

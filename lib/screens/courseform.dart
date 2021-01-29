@@ -18,15 +18,16 @@ class CourseForm extends StatefulWidget {
 class CourseFormState extends State<CourseForm> {
   //VARIABLES
   final _formKey = GlobalKey<FormState>();
-  //List<TextEditingController> _fldControllers;
-  final _fldController = TextEditingController();
+  final _fieldController = TextEditingController();
   int inputStart;
   int inputEnd;
   Color startHoleColor;
   Color endHoleColor;
 
   //FUNCTIONS
+
   changeHoleNumber(int hole, String action, String holeType) {
+    //INCREASE HOLE NUMBER DEPENDING ON HOLE TYPE
     if (action == 'add') {
       if ((hole + 1) < 100) {
         print(action);
@@ -38,6 +39,7 @@ class CourseFormState extends State<CourseForm> {
           print('$holeType hole = $inputEnd');
         }
       }
+      //DECREASE HOLE NUMBER DEPENDING ON HOLE TYPE
     } else if (action == 'subtract') {
       if ((hole - 1) >= 0) {
         print(action);
@@ -54,7 +56,8 @@ class CourseFormState extends State<CourseForm> {
     }
   }
 
-  Color setNumColor(int hole, String holeType) {
+  Color setScoreNumColor(int hole, String holeType) {
+    //
     if (holeType == 'start') {
       if (hole == 0) {
         return startHoleColor = Colors.white38;
@@ -72,12 +75,13 @@ class CourseFormState extends State<CourseForm> {
   }
 
   createCourse(nav) {
+    //REQUIRE ENTRIES INTO ALL FIELDS AND END TO BE GREATER THAN START
     if (_formKey.currentState.validate() &&
         (inputStart != 0) &&
         (inputEnd >= inputStart)) {
       print('Form validated');
       global.newCourse = Round(
-        _fldController.text,
+        _fieldController.text,
         inputStart,
         inputEnd,
       );
@@ -90,10 +94,6 @@ class CourseFormState extends State<CourseForm> {
   @override
   void initState() {
     super.initState();
-    //_fldControllers = List<TextEditingController>.generate(
-    //3,
-    //(index) => TextEditingController(),
-    //);
     inputStart = 0;
     inputEnd = 0;
     startHoleColor = Colors.white38;
@@ -102,11 +102,7 @@ class CourseFormState extends State<CourseForm> {
 
   @override
   void dispose() {
-    // Clean up the controller when the widget is disposed.
-    //for (var i = 0; i <= _fldControllers.length; i++) {
-    //_fldControllers[i].dispose();
-    //}
-    _fldController.dispose();
+    _fieldController.dispose();
     super.dispose();
   }
 
@@ -128,11 +124,10 @@ class CourseFormState extends State<CourseForm> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    global.vrtSpacer(40.0),
+                    SizedBox(height: 40.0),
                     global.fieldLabel('Course Name:'),
-                    CourseFormField(double.infinity, _fldController),
-                    global.vrtSpacer(50.0),
-                    //vrtSpacer
+                    CourseFormField(double.infinity, _fieldController),
+                    SizedBox(height: 50.0),
                     Row(
                       children: [
                         global.fieldLabel('Starting Hole: '),
@@ -144,7 +139,7 @@ class CourseFormState extends State<CourseForm> {
                             () {
                           setState(() {
                             changeHoleNumber(inputStart, 'subtract', 'start');
-                            setNumColor(inputStart, 'start');
+                            setScoreNumColor(inputStart, 'start');
                           });
                         }),
                         Container(
@@ -171,13 +166,12 @@ class CourseFormState extends State<CourseForm> {
                             () {
                           setState(() {
                             changeHoleNumber(inputStart, 'add', 'start');
-                            setNumColor(inputStart, 'start');
+                            setScoreNumColor(inputStart, 'start');
                           });
                         }),
                       ],
                     ),
-                    global.vrtSpacer(45.0),
-                    //vrtSpacer
+                    SizedBox(height: 45.0),
                     Row(
                       children: [
                         global.fieldLabel('Ending Hole: '),
@@ -188,7 +182,7 @@ class CourseFormState extends State<CourseForm> {
                             () {
                           setState(() {
                             changeHoleNumber(inputEnd, 'subtract', 'end');
-                            setNumColor(inputEnd, 'end');
+                            setScoreNumColor(inputEnd, 'end');
                           });
                         }),
                         Container(
@@ -214,13 +208,12 @@ class CourseFormState extends State<CourseForm> {
                             () {
                           setState(() {
                             changeHoleNumber(inputEnd, 'add', 'end');
-                            setNumColor(inputEnd, 'end');
+                            setScoreNumColor(inputEnd, 'end');
                           });
                         }),
                       ],
                     ),
-                    global.vrtSpacer(65.0),
-                    //vrtSpacerND AND CREATE NEW COURSE
+                    SizedBox(height: 65.0),
                     WideButton(
                       'Start Round',
                       () {

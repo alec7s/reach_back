@@ -12,7 +12,7 @@ class ScoreMatrix extends StatelessWidget {
         DataCell(
           Center(
             child: Text(
-              global.newCourse.getHoleNumber(index).toString(),
+              global.newCourse.holeNumbers[index].toString(),
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 25.0,
@@ -23,7 +23,7 @@ class ScoreMatrix extends StatelessWidget {
         DataCell(
           Center(
             child: Text(
-              global.newCourse.getScore(index).toString(),
+              global.newCourse.holeNumbers[index].toString(),
               style: TextStyle(
                 color: Colors.redAccent,
                 fontSize: 25.0,
@@ -70,7 +70,7 @@ class ScoreMatrix extends StatelessWidget {
     List<DataRow> rowList = [];
     var i = 0;
     for (; i < global.newCourse.getHoleNumbersLen(); i++) {
-      scoreSum += global.newCourse.getScore(i);
+      scoreSum += global.newCourse.scores[i];
       rowList.add(createDataRow(i));
     }
     rowList.add(createSumRow(scoreSum));

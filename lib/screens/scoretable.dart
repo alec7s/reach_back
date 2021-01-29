@@ -16,7 +16,7 @@ class ScoreTable extends StatefulWidget {
 class ScoreTableState extends State<ScoreTable> {
   int validateScores() {
     int result = 0;
-    for (int score in global.newCourse.getScoreList()) {
+    for (int score in global.newCourse.scores) {
       if (score == 0) {
         global.constraintNotifier('Scores cannot be zero');
         result = 1;
@@ -33,7 +33,7 @@ class ScoreTableState extends State<ScoreTable> {
         backgroundColor: Colors.black,
         appBar: AppBar(
           backgroundColor: Theme.of(context).accentColor.withOpacity(0.9),
-          title: Text(global.newCourse.getName()),
+          title: Text(global.newCourse.name),
         ),
         body: SingleChildScrollView(
           child: Column(
@@ -71,8 +71,8 @@ class ScoreTableState extends State<ScoreTable> {
                   global.buttonNav(context, () => HomePage());
                 }
               }),
-              global.vrtSpacer(
-                global.flexHeight(context),
+              SizedBox(
+                height: global.flexHeight(context),
               ),
             ],
           ),
