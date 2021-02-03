@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 
+//TODO: THIS MIGHT NEED TO BE CHANGED TO STATEFUL IF CHECKMARK COLOR WILL CHANGE AFTER PRESSING ROW FLAT BUTTON. NEED TO REVIEW.
 class RoundMatrix extends StatelessWidget {
   List<Map<String, dynamic>> data;
   RoundMatrix(this.data);
@@ -14,49 +15,65 @@ class RoundMatrix extends StatelessWidget {
         String name = data[i]['name'];
         int finalScore = data[i]['finalScore'];
         rows.add(
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                width: MediaQuery.of(context).size.width * 0.3,
-                child: Center(
-                  child: Text(
-                    date,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18.0,
+          FlatButton(
+            padding: EdgeInsets.all(0.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  alignment: Alignment.center,
+                  width: MediaQuery.of(context).size.width * 0.08,
+                  height: MediaQuery.of(context).size.width * 0.08,
+                  color: Colors.white38,
+                ),
+                SizedBox(width: MediaQuery.of(context).size.width * 0.02),
+                //DATE CELL
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.25,
+                  child: Center(
+                    child: Text(
+                      date,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18.0,
+                      ),
+                      textAlign: TextAlign.center,
                     ),
-                    textAlign: TextAlign.center,
                   ),
                 ),
-              ),
-              Container(
-                width: MediaQuery.of(context).size.width * 0.5,
-                child: Center(
-                  child: Text(
-                    name,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18.0,
+                //COURSE NAME CELL
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.5,
+                  child: Center(
+                    child: Text(
+                      name,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18.0,
+                      ),
+                      textAlign: TextAlign.center,
                     ),
-                    textAlign: TextAlign.center,
                   ),
                 ),
-              ),
-              Container(
-                width: MediaQuery.of(context).size.width * 0.2,
-                child: Center(
-                  child: Text(
-                    finalScore.toString(),
-                    style: TextStyle(
-                      color: Colors.redAccent,
-                      fontSize: 18.0,
+                //SCORE CELL
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.15,
+                  child: Center(
+                    child: Text(
+                      finalScore.toString(),
+                      style: TextStyle(
+                        color: Colors.redAccent,
+                        fontSize: 18.0,
+                      ),
+                      textAlign: TextAlign.center,
                     ),
-                    textAlign: TextAlign.center,
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
+            onPressed: () {
+              print('button pressed');
+            },
           ),
         );
         rows.add(
@@ -96,11 +113,17 @@ class RoundMatrix extends StatelessWidget {
             children: [
               Container(
                 alignment: Alignment.center,
-                width: MediaQuery.of(context).size.width * 0.3,
+                width: MediaQuery.of(context).size.width * 0.1,
+                height: MediaQuery.of(context).size.width * 0.1,
+                //color: Colors.white38,
+              ),
+              Container(
+                alignment: Alignment.center,
+                width: MediaQuery.of(context).size.width * 0.25,
                 child: Text(
                   'Date',
                   style: TextStyle(
-                    fontSize: 30.0,
+                    fontSize: 23.0,
                     color: Colors.white,
                     fontWeight: FontWeight.w500,
                   ),
@@ -112,7 +135,7 @@ class RoundMatrix extends StatelessWidget {
                 child: Text(
                   'Course',
                   style: TextStyle(
-                    fontSize: 30.0,
+                    fontSize: 23.0,
                     color: Colors.white,
                     fontWeight: FontWeight.w500,
                   ),
@@ -120,11 +143,11 @@ class RoundMatrix extends StatelessWidget {
               ),
               Container(
                 alignment: Alignment.center,
-                width: MediaQuery.of(context).size.width * 0.2,
+                width: MediaQuery.of(context).size.width * 0.15,
                 child: Text(
                   'Score',
                   style: TextStyle(
-                    fontSize: 30.0,
+                    fontSize: 23.0,
                     color: Colors.white,
                     fontWeight: FontWeight.w500,
                   ),
@@ -134,11 +157,16 @@ class RoundMatrix extends StatelessWidget {
           ),
           SizedBox(
             width: double.infinity,
-            height: 20.0,
+            height: 15,
             child: Divider(color: Colors.white),
           ),
           //ROWS OF EXTRACTED DATA
           createMatrix(context),
+          SizedBox(
+            width: double.infinity,
+            height: 13.5,
+            child: Divider(color: Colors.white),
+          ),
         ]),
       ),
     );

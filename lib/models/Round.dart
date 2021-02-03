@@ -14,11 +14,15 @@ class Round {
 
   Round(this.name, this.start, this.end,
       {this.id, this.finalScore, this.dateYmd}) {
+    //FIND DATE/TIME
     now = new DateTime.now();
+    //FORMAT DATE AS STRING
     dateYmd =
         "${now.year.toString()}-${now.month.toString().padLeft(2, '0')}-${now.day.toString().padLeft(2, '0')}";
     holeNumbers = [for (var i = this.start; i <= this.end; i++) i];
+    //CREATE LIST TO HOLD SCORES FOR EACH HOLE. STARTING SCORE = 0.
     scores = [for (var i = 0; i < (this.holeNumbers.length); i++) 0];
+    //CREATE FORMATTED COURSE NAME WITH STARTING/ENDING HOLE NUMBERS
     nameConcat = name + ' (#' + start.toString() + '-' + end.toString() + ')';
     name = nameConcat;
     print(
@@ -48,11 +52,6 @@ class Round {
   List<int> getScoreList() => scores;
   List<int> getHoleNumList() => holeNumbers;
   getFinalScore() => finalScore;
-
-  //SETTERS
-  //setScoreMap() {
-  //Map<int, int> _scoreMap = Map.fromIterables(_holeNumbers, _scores);
-  //}
 
   setScore(int index, int score) {
     scores[index] = score;
