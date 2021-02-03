@@ -60,11 +60,15 @@ class ScoreTableState extends State<ScoreTable> {
                   () async {
                 if (validateScores() == 0) {
                   global.newCourse.setFinalScore();
+                  global.newCourse.setListStrings();
                   int i = await DatabaseHelper.instance.insert(
                     {
                       'date': global.newCourse.dateYmd,
                       'name': global.newCourse.name,
-                      'finalScore': global.newCourse.finalScore
+                      'finalScore': global.newCourse.finalScore,
+                      'holeList': global.newCourse.holesString,
+                      'scoreList': global.newCourse.scoresString,
+                      'status': 'incomplete',
                     },
                   );
                   print('Saved course (id = $i)');

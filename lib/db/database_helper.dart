@@ -32,7 +32,10 @@ class DatabaseHelper {
       id INTEGER PRIMARY KEY, 
       date TEXT NOT NULL,
       name TEXT NOT NULL,
-      finalScore INTEGER)
+      finalScore INTEGER, 
+      holeList TEXT NOT NULL,
+      scoreList TEXT NOT NULL, 
+      status TEXT NOT NULL)
       ''');
   }
 

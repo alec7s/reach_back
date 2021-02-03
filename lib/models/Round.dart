@@ -3,13 +3,14 @@ class Round {
   String name;
   int start;
   int end;
-  //var _scoreMap;
   var holeNumbers;
   var scores;
   DateTime now;
   String dateYmd;
   int finalScore = 0;
   String nameConcat;
+  String holesString;
+  String scoresString;
 
   Round(this.name, this.start, this.end,
       {this.id, this.finalScore, this.dateYmd}) {
@@ -64,4 +65,9 @@ class Round {
   }
 
   setFinalScore() => finalScore = scores.reduce((int a, int b) => a + b);
+
+  setListStrings() {
+    holesString = holeNumbers.join(',');
+    scoresString = scores.join(',');
+  }
 }
