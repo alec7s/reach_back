@@ -6,6 +6,8 @@ import 'package:flutter/painting.dart';
 class RoundMatrix extends StatelessWidget {
   List<Map<String, dynamic>> data;
   RoundMatrix(this.data);
+  int selectedRow = 0;
+  int selectedRowGroupValue;
 
   Widget createMatrix(context) {
     if (data != null) {
@@ -15,65 +17,81 @@ class RoundMatrix extends StatelessWidget {
         String name = data[i]['name'];
         int finalScore = data[i]['finalScore'];
         rows.add(
-          FlatButton(
-            padding: EdgeInsets.all(0.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  alignment: Alignment.center,
-                  width: MediaQuery.of(context).size.width * 0.08,
-                  height: MediaQuery.of(context).size.width * 0.08,
-                  color: Colors.white38,
-                ),
-                SizedBox(width: MediaQuery.of(context).size.width * 0.02),
-                //DATE CELL
-                Container(
-                  width: MediaQuery.of(context).size.width * 0.25,
-                  child: Center(
-                    child: Text(
-                      date,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18.0,
-                      ),
-                      textAlign: TextAlign.center,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              //Container(
+              //alignment: Alignment.center,
+              //width: MediaQuery.of(context).size.width * 0.08,
+              //height: MediaQuery.of(context).size.width * 0.08,
+              //color: Colors.white38.withOpacity(0.2),
+              //),
+              Container(
+                width: MediaQuery.of(context).size.width * 0.08,
+                child: Padding(
+                  padding: EdgeInsets.all(0.0),
+                  child: Theme(
+                    data: ThemeData.dark(),
+                    //TODO: CONFIRM WORKING AFTER CHANGING TO STATEFUL
+                    child: Radio(
+                      activeColor: Colors.redAccent,
+                      value: selectedRow,
+                      onChanged: (value) {
+                        print('Row $selectedRow selected');
+                        //TODO: ADD SETSTATE
+                        //setState(() {
+                        //selectedRowGroupValue = selectedRow + 1;
+                        //});
+                      },
+                      groupValue: null,
                     ),
                   ),
                 ),
-                //COURSE NAME CELL
-                Container(
-                  width: MediaQuery.of(context).size.width * 0.5,
-                  child: Center(
-                    child: Text(
-                      name,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18.0,
-                      ),
-                      textAlign: TextAlign.center,
+              ),
+              SizedBox(width: MediaQuery.of(context).size.width * 0.02),
+              //DATE CELL
+              Container(
+                width: MediaQuery.of(context).size.width * 0.25,
+                child: Center(
+                  child: Text(
+                    date,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18.0,
                     ),
+                    textAlign: TextAlign.center,
                   ),
                 ),
-                //SCORE CELL
-                Container(
-                  width: MediaQuery.of(context).size.width * 0.15,
-                  child: Center(
-                    child: Text(
-                      finalScore.toString(),
-                      style: TextStyle(
-                        color: Colors.redAccent,
-                        fontSize: 18.0,
-                      ),
-                      textAlign: TextAlign.center,
+              ),
+              //COURSE NAME CELL
+              Container(
+                width: MediaQuery.of(context).size.width * 0.5,
+                child: Center(
+                  child: Text(
+                    name,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18.0,
                     ),
+                    textAlign: TextAlign.center,
                   ),
                 ),
-              ],
-            ),
-            onPressed: () {
-              print('button pressed');
-            },
+              ),
+              //SCORE CELL
+              Container(
+                width: MediaQuery.of(context).size.width * 0.15,
+                child: Center(
+                  child: Text(
+                    finalScore.toString(),
+                    style: TextStyle(
+                      color: Colors.redAccent,
+                      fontSize: 18.0,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ),
+            ],
           ),
         );
         rows.add(
