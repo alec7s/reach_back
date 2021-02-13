@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 //*******************************************
 //VARIABLES
 var newCourse;
+var selectedRound;
 
 //*******************************************
 //FUNCTIONS

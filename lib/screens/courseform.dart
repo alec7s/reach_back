@@ -217,7 +217,7 @@ class CourseFormState extends State<CourseForm> {
                     WideButton(
                       'Start Round',
                       () {
-                        createCourse(ScoreCard());
+                        createCourse(ScoreCard("new"));
                         //global.setHoleNumber('next');
                       },
                     ),

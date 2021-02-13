@@ -1,16 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:ReachBack/globals.dart' as global;
 
 class RoundMatrix extends StatefulWidget {
+  //static Map<String, dynamic> selectedRound;
   List<Map<String, dynamic>> data;
   RoundMatrix(this.data);
 
   @override
-  _RoundMatrixState createState() => _RoundMatrixState();
+  RoundMatrixState createState() => RoundMatrixState();
 }
 
-class _RoundMatrixState extends State<RoundMatrix> {
+class RoundMatrixState extends State<RoundMatrix> {
   int selectedRow;
   List<int> rowNumberList = [];
 
@@ -22,8 +24,10 @@ class _RoundMatrixState extends State<RoundMatrix> {
         String date = widget.data[i]['date'];
         String name = widget.data[i]['name'];
         int finalScore = widget.data[i]['finalScore'];
+
         //ADD rowNumber to rowNumberList, rowNumber TO BE USED AS RADIO BUTTON GROUP VALUE
         rowNumberList.add(i + 1);
+
         //SAVE ROWS WITH DATA INTO ROWS LIST
         rows.add(
           //UPDATE RADIO BUTTON WHEN ANY PART OF ROW IS TAPPED
@@ -31,6 +35,7 @@ class _RoundMatrixState extends State<RoundMatrix> {
             onTap: () {
               setState(() {
                 selectedRow = rowNumberList[i];
+                global.selectedRound = widget.data[selectedRow - 1];
               });
             },
             child: Row(
@@ -50,8 +55,8 @@ class _RoundMatrixState extends State<RoundMatrix> {
                         onChanged: (value) {
                           setState(() {
                             selectedRow = rowNumberList[i];
+                            global.selectedRound = widget.data[selectedRow - 1];
                           });
-                          print('Row $selectedRow selected');
                         },
                       ),
                     ),

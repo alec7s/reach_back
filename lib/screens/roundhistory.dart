@@ -1,8 +1,11 @@
+import 'package:ReachBack/screens/scorecard.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ReachBack/components/roundmatrix.dart';
 import 'package:ReachBack/db/database_helper.dart';
 import 'package:ReachBack/components/WideButton.dart';
+import 'package:ReachBack/globals.dart' as global;
+import 'package:ReachBack/models/Round.dart';
 
 class RoundHistory extends StatefulWidget {
   List<Map<String, dynamic>> data;
@@ -15,6 +18,8 @@ class RoundHistory extends StatefulWidget {
 }
 
 class RoundHistoryState extends State<RoundHistory> {
+  Map<String, dynamic> selectedRoundDataMap;
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -73,6 +78,32 @@ class RoundHistoryState extends State<RoundHistory> {
                   //ON PRESSED
                   () {
                 print("start button pressed");
+                selectedRoundDataMap = global.selectedRound;
+                print(selectedRoundDataMap);
+                //OPEN SCORECARD IN REPLAY MODE IF ROUND IS SELECTED
+                if (selectedRoundDataMap != null) {
+                  //CONSTRUCT NEW ROUND USING SELECTED ROUND DATA
+                  List<String> roundHolesListStr =
+                      selectedRoundDataMap['holeList'].split(',');
+                  List<int> roundHolesListInt =
+                      roundHolesListStr.map(int.parse).toList();
+                  int selectedRoundStartInt = roundHolesListInt[0];
+                  int selectedRoundEndInt =
+                      roundHolesListInt[roundHolesListInt.length - 1];
+
+                  //TODO: FIX NAME PASSED INTO NEW ROUND. HOLE # RANGE IS DUPLICATED IN APP BAR WHEN NEW SCORE CARD IS OPENED
+                  global.newCourse = Round(
+                    selectedRoundDataMap['name'],
+                    selectedRoundStartInt,
+                    selectedRoundEndInt,
+                  );
+                  global.buttonNav(context, () {
+                    return ScoreCard("replay",
+                        previousRoundData: selectedRoundDataMap);
+                  });
+                } else {
+                  return global.constraintNotifier("Please select a round");
+                }
               }),
             ],
           ),

@@ -5,6 +5,12 @@ import 'package:ReachBack/globals.dart' as global;
 import 'package:ReachBack/screens/scoretable.dart';
 
 class ScoreCard extends StatefulWidget {
+  Map<String, dynamic> previousRoundData;
+  //WHEN OPENED FROM COURSE FORM scoreCardType = new
+  //WHEN OPENED FROM SCORE CARD scoreCardType = replay
+  String scoreCardType;
+  ScoreCard(this.scoreCardType, {this.previousRoundData});
+
   @override
   ScoreCardState createState() {
     return ScoreCardState();
