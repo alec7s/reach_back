@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ReachBack/components/roundmatrix.dart';
 import 'package:ReachBack/db/database_helper.dart';
+import 'package:ReachBack/components/WideButton.dart';
 
 class RoundHistory extends StatefulWidget {
   List<Map<String, dynamic>> data;
@@ -67,6 +68,12 @@ class RoundHistoryState extends State<RoundHistory> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               RoundMatrix(widget.data),
+              //TODO ADD ON PRESS FUNCTION -- ROUTE TO NEW SCORECARD SCREEN
+              WideButton("START",
+                  //ON PRESSED
+                  () {
+                print("start button pressed");
+              }),
             ],
           ),
         ),
