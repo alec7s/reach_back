@@ -90,13 +90,9 @@ class RoundHistoryState extends State<RoundHistory> {
                   int selectedRoundStartInt = roundHolesListInt[0];
                   int selectedRoundEndInt =
                       roundHolesListInt[roundHolesListInt.length - 1];
-
-                  //TODO: FIX NAME PASSED INTO NEW ROUND. HOLE # RANGE IS DUPLICATED IN APP BAR WHEN NEW SCORE CARD IS OPENED
-                  global.newCourse = Round(
-                    selectedRoundDataMap['name'],
-                    selectedRoundStartInt,
-                    selectedRoundEndInt,
-                  );
+                  global.newCourse = Round(selectedRoundDataMap['name'],
+                      selectedRoundStartInt, selectedRoundEndInt,
+                      roundType: "replay");
                   global.buttonNav(context, () {
                     return ScoreCard("replay",
                         previousRoundData: selectedRoundDataMap);

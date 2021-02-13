@@ -11,9 +11,10 @@ class Round {
   String nameConcat;
   String holesString;
   String scoresString;
+  String roundType;
 
   Round(this.name, this.start, this.end,
-      {this.id, this.finalScore, this.dateYmd}) {
+      {this.id, this.finalScore, this.dateYmd, this.roundType}) {
     //FIND DATE/TIME
     now = new DateTime.now();
     //FORMAT DATE AS STRING
@@ -23,8 +24,10 @@ class Round {
     //CREATE LIST TO HOLD SCORES FOR EACH HOLE. STARTING SCORE = 0.
     scores = [for (var i = 0; i < (this.holeNumbers.length); i++) 0];
     //CREATE FORMATTED COURSE NAME WITH STARTING/ENDING HOLE NUMBERS
-    nameConcat = name + ' (#' + start.toString() + '-' + end.toString() + ')';
-    name = nameConcat;
+    if (roundType != "replay") {
+      nameConcat = name + ' (#' + start.toString() + '-' + end.toString() + ')';
+      name = nameConcat;
+    }
     print(
       '''
     date: $dateYmd, 
