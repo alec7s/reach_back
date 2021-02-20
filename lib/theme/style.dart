@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 //TODO: FINALIZE AND APPLY THEME THROUGHOUT APP
+//TODO: ADD FONTS
 ThemeData appTheme() {
   return ThemeData(
     primaryColor: Colors.black,
