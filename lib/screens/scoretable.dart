@@ -6,6 +6,9 @@ import 'package:ReachBack/db/database_helper.dart';
 import 'package:ReachBack/globals.dart' as global;
 import 'package:ReachBack/screens/homepage.dart';
 
+//GENERATE SCREEN THAT DISPLAYS SCORES FROM FINAL ROUND
+//USE scorematrix TO DISPLAY SCORES AND HOLE INFO IN A TABLE FORMAT
+//INCLUDE SAVE BUTTON AT THE BOTTOM OF THE SCREEN
 class ScoreTable extends StatefulWidget {
   @override
   ScoreTableState createState() {
@@ -14,6 +17,7 @@ class ScoreTable extends StatefulWidget {
 }
 
 class ScoreTableState extends State<ScoreTable> {
+  //ENSURE SCORES ENTERED FOR ALL HOLES
   int validateScores() {
     int result = 0;
     for (int score in global.newRound.scores) {
@@ -38,6 +42,7 @@ class ScoreTableState extends State<ScoreTable> {
         body: SingleChildScrollView(
           child: Column(
             children: [
+              //TITLE:
               Container(
                 padding: EdgeInsets.only(top: 15.0),
                 margin: EdgeInsets.only(bottom: 15.0),
@@ -51,14 +56,19 @@ class ScoreTableState extends State<ScoreTable> {
                   ),
                 ),
               ),
+              //CREATE NEW SCOREMATRIX TO DISPLAY HOLE INFO / SCORES
               ScoreMatrix(),
+              //SPACER FOR FORMATTING
               SizedBox(
                 height: 30.0,
               ),
+              //SAVE BUTTON TO SAVE ROUND INFORMATION TO DB
+              //TODO: EDIT ON PRESSED TO EDIT PREVIOUS ROUND IN DB RECORD IF IN REPLAY MODE
               WideButton('Save',
                   //ON PRESSED
                   () async {
                 if (validateScores() == 0) {
+                  //SET ROUND VALUES AND SAVE INTO FORMATS COMPATIBLE WITH DB VARS
                   global.newRound.setFinalScore();
                   global.newRound.setListStrings();
                   int i = await DatabaseHelper.instance.insert(
@@ -72,9 +82,11 @@ class ScoreTableState extends State<ScoreTable> {
                     },
                   );
                   print('Saved course (id = $i)');
+                  //RETURN TO HOME PAGE
                   global.buttonNav(context, () => HomePage());
                 }
               }),
+              //SPACER FOR FORMATTING
               SizedBox(
                 height: global.flexHeight(context),
               ),

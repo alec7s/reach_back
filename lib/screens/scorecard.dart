@@ -4,6 +4,11 @@ import 'package:ReachBack/components/IcnButton.dart';
 import 'package:ReachBack/globals.dart' as global;
 import 'package:ReachBack/screens/scoretable.dart';
 
+//CREATE SCORECARD SCREEN
+//DISPLAYS INFORMATION FOR ONE HOLE AT A TIME
+//ALLOWS SCORE ENTRY FOR CURRENT HOLE
+//CHANGING HOLE NUMBER USING FORWARD/BACK ARROW UPDATES DISPLAY AND CHANGES VALUES PER HOLE
+//PRESSING NEXT ON LAST HOLE WILL LOAD SCORECARD SCREEN
 class ScoreCard extends StatefulWidget {
   Map<String, dynamic> previousRoundData;
   //WHEN OPENED FROM COURSE FORM scoreCardType = new
@@ -24,6 +29,8 @@ class ScoreCardState extends State<ScoreCard> {
   int score;
   Color scoreColor;
 
+  //SET THE HOLE NUMBER DISPLAYED, DEPENDING ON THE CURRENT HOLE NUMBER
+  //AND USER INPUT FROM NEXT HOLE / PREVIOUS HOLE BUTTON
   void setHoleNumber(String direction) {
     if (direction == 'next') {
       if ((hole + 1) <= global.newRound.end) {
@@ -49,6 +56,8 @@ class ScoreCardState extends State<ScoreCard> {
     score = global.newRound.scores[holeIndex];
   }
 
+  //SET SCORE TO RED IF ENTERED SCORE IS GREATER THAN ZERO
+  //SET COLOR TO GRAY IF SCORE IS ZERO
   Color setScoreColor() {
     if (score == 0) {
       return scoreColor = Colors.white38;
@@ -57,6 +66,7 @@ class ScoreCardState extends State<ScoreCard> {
     }
   }
 
+  //GRAY OUT SCORE SUBTRACTION BUTTON IF SCORE IS ZERO, OTHERWISE SET TO WHITE
   Color setMinusButtonColor() {
     if (score == 0) {
       return Colors.white70.withOpacity(0.1);
@@ -65,6 +75,8 @@ class ScoreCardState extends State<ScoreCard> {
     }
   }
 
+  //SET HOLE BACK BUTTON COLOR TO GRAY IF HOLE # EQUALS ROUND'S START HOLE #
+  //OTHERWISE SET HOLE BACK BUTTON COLOR TO WHITE
   setHoleBackColor() {
     if (hole == global.newRound.start) {
       _holeBackColor = Colors.white70.withOpacity(0.1);
@@ -115,6 +127,8 @@ class ScoreCardState extends State<ScoreCard> {
                       () {
                         setState(
                           () {
+                            //LOAD PREVIOUS HOLE INFO AND RESET COLORS
+                            //BASED ON INFO FOR THAT HOLE
                             if (hole > global.newRound.start) {
                               global.newRound.setScore(holeIndex, score);
                               setHoleNumber('back');
@@ -128,6 +142,7 @@ class ScoreCardState extends State<ScoreCard> {
                   ),
                   Column(
                     children: <Widget>[
+                      //HOLE LABEL
                       Container(
                         width: 140.0,
                         height: MediaQuery.of(context).size.height * 0.08,
@@ -154,13 +169,14 @@ class ScoreCardState extends State<ScoreCard> {
                           textAlign: TextAlign.center,
                         ),
                       ),
+                      //DIVIDER AND SPACING
                       SizedBox(
                           height: 12.0,
                           width: 130.0,
                           child: Divider(color: Colors.white70)),
                     ],
                   ),
-                  //GO TO NEXT HOLE
+                  //NEXT HOLE BUTTON
                   Container(
                     height: MediaQuery.of(context).size.height * 0.2,
                     width: 100.0,
@@ -171,11 +187,15 @@ class ScoreCardState extends State<ScoreCard> {
                       () {
                         setState(
                           () {
+                            //IF CURRENT HOLE IS NOT THE LAST THEN
+                            //LOAD NEXT HOLE'S INFO AND UPDATE SCREEN
                             if (hole < global.newRound.end) {
                               global.newRound.setScore(holeIndex, score);
                               setHoleNumber('next');
                               setHoleBackColor();
                               getScoreValue();
+                              //OTHERWISE SAVE SCORES TO ROUND OBJECT
+                              //AND CREATE SCORE TABLE
                             } else {
                               global.newRound.setScore(holeIndex, score);
                               global.buttonNav(
@@ -190,6 +210,8 @@ class ScoreCardState extends State<ScoreCard> {
                   ),
                 ],
               ),
+              //SCORE DISPLAY ON SCREEN, WHICH CHANGES DEPENDING ON
+              //ADD OR SUBTRACT BUTTON ACTIONS
               Container(
                 margin: EdgeInsets.fromLTRB(30.0, 0.0, 30.0, 5),
                 color: Colors.grey[900].withOpacity(0.5),

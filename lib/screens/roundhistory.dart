@@ -7,6 +7,11 @@ import 'package:ReachBack/components/WideButton.dart';
 import 'package:ReachBack/globals.dart' as global;
 import 'package:ReachBack/models/Round.dart';
 
+//CREATE SCREEN THAT DISPLAYS INFO FROM PREVIOUSLY SAVED ROUNDS
+//ROUND INFO WILL BE DISPLAYED IN TABLE FORMAT WITH ONE ROUND PER ROW
+//INCLUDE BUTTON TO CLEAR PREVIOUS ROUND DATA IN APP BAR
+//SELECT ROUND TO PLAY AGAINST USING RADIO BUTTON
+//INCLUDE BUTTON AT THE BOTTOM OF THE TABLE TO START ROUND PLAYING AGAINST PREVIOUS
 class RoundHistory extends StatefulWidget {
   List<Map<String, dynamic>> data;
   RoundHistory(this.data);

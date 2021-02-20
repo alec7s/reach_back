@@ -7,6 +7,8 @@ import 'package:ReachBack/screens/scorecard.dart';
 import 'package:ReachBack/components/WideButton.dart';
 import 'package:ReachBack/components/formfield.dart';
 
+//CREATE COURSEFORM FOR NEW COURSE ENTRY
+//USE INFO ENTERED TO GENERATE NEW COURSE AND SCORECARD
 class CourseForm extends StatefulWidget {
   @override
   CourseFormState createState() {
@@ -14,9 +16,7 @@ class CourseForm extends StatefulWidget {
   }
 }
 
-//NEW COURSE FORM
 class CourseFormState extends State<CourseForm> {
-  //VARIABLES
   final _formKey = GlobalKey<FormState>();
   final _fieldController = TextEditingController();
   int inputStart;
@@ -24,8 +24,7 @@ class CourseFormState extends State<CourseForm> {
   Color startHoleColor;
   Color endHoleColor;
 
-  //FUNCTIONS
-
+  //CHANGE HOLE NUMBER WHEN PLUS/MINUS BUTTON PRESSED
   changeHoleNumber(int hole, String action, String holeType) {
     //INCREASE HOLE NUMBER DEPENDING ON HOLE TYPE
     if (action == 'add') {
@@ -56,7 +55,9 @@ class CourseFormState extends State<CourseForm> {
     }
   }
 
-  Color setScoreNumColor(int hole, String holeType) {
+  //SET HOLE NUMBER COLOR DEPENDING WHEN HOLE NUMBER CHANGES FROM
+  //PRESSING PLUS/MINUS BUTTON
+  Color setHoleNumColor(int hole, String holeType) {
     //
     if (holeType == 'start') {
       if (hole == 0) {
@@ -74,7 +75,10 @@ class CourseFormState extends State<CourseForm> {
     return Colors.white38;
   }
 
-  createCourse(nav) {
+  //CREATE NEW ROUND USING INFO ENTERED IN FORM
+  //MOVE TO SPECIFIED SCREEN (NAV) IF FIELDS ARE VALIDATED
+  createRound(nav) {
+    //VALIDATE FORM ENTRIES
     //REQUIRE ENTRIES INTO ALL FIELDS AND END TO BE GREATER THAN START
     if (_formKey.currentState.validate() &&
         (inputStart != 0) &&
@@ -93,6 +97,7 @@ class CourseFormState extends State<CourseForm> {
 
   @override
   void initState() {
+    //TODO: DOUBLE CHECK WHETHER OR NOT THESE VARS BELONG IN INITSTATE
     super.initState();
     inputStart = 0;
     inputEnd = 0;
@@ -100,13 +105,13 @@ class CourseFormState extends State<CourseForm> {
     endHoleColor = Colors.white38;
   }
 
+  //CLEAR FIELD CONTROLLER
   @override
   void dispose() {
     _fieldController.dispose();
     super.dispose();
   }
 
-//***************************************************
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
@@ -119,6 +124,7 @@ class CourseFormState extends State<CourseForm> {
         body: SingleChildScrollView(
           child: Column(
             children: <Widget>[
+              //FORM FOR NEW COURSE ENTRY
               Form(
                 key: _formKey,
                 child: Column(
@@ -126,22 +132,28 @@ class CourseFormState extends State<CourseForm> {
                   children: <Widget>[
                     SizedBox(height: 40.0),
                     global.fieldLabel('Course Name:'),
+                    //FREE TEXT FIELD
                     CourseFormField(double.infinity, _fieldController),
+                    //SPACER FOR FORMATTING
                     SizedBox(height: 50.0),
+                    //HOLDS WIDGETS FOR START HOLE
                     Row(
                       children: [
                         global.fieldLabel('Starting Hole: '),
+                        //SPACER FOR FORMATTING
                         SizedBox(width: 10.0),
                         //SUBTRACT START HOLE
+                        //MINUS BUTTON
                         IcnButton(
                             Icons.remove, 35.0, Colors.white70.withOpacity(0.5),
                             //ON PRESSED
                             () {
                           setState(() {
                             changeHoleNumber(inputStart, 'subtract', 'start');
-                            setScoreNumColor(inputStart, 'start');
+                            setHoleNumColor(inputStart, 'start');
                           });
                         }),
+                        //STARTING HOLE NUMBER. UPDATES WHEN PLUS/MINUS BUTTON PRESSED
                         Container(
                           margin: EdgeInsets.fromLTRB(13.5, 0.0, 10.0, 0.0),
                           padding: EdgeInsets.fromLTRB(0.0, 4.25, 0.0, 4.25),
@@ -158,32 +170,37 @@ class CourseFormState extends State<CourseForm> {
                                 letterSpacing: 5.0),
                           ),
                         ),
-                        //ADD START HOLE
+                        //PLUS BUTTON
                         IcnButton(
                             Icons.add, 35.0, Colors.white70.withOpacity(0.5),
                             //ON PRESSED
                             () {
                           setState(() {
                             changeHoleNumber(inputStart, 'add', 'start');
-                            setScoreNumColor(inputStart, 'start');
+                            setHoleNumColor(inputStart, 'start');
                           });
                         }),
                       ],
                     ),
+                    //SPACER FOR FORMATTING
                     SizedBox(height: 45.0),
+                    //HOLDS WIDGETS FOR END HOLE
                     Row(
                       children: [
                         global.fieldLabel('Ending Hole: '),
+                        //SPACER FOR FORMATTING
                         SizedBox(width: 25.0),
                         //SUBTRACT END HOLE
+                        //MINUS BUTTON
                         IcnButton(
                             Icons.remove, 35.0, Colors.white70.withOpacity(0.5),
                             () {
                           setState(() {
                             changeHoleNumber(inputEnd, 'subtract', 'end');
-                            setScoreNumColor(inputEnd, 'end');
+                            setHoleNumColor(inputEnd, 'end');
                           });
                         }),
+                        //END HOLE NUMBER. UPDATES WHEN PLUS/MINUS BUTTON PRESSED
                         Container(
                           margin: EdgeInsets.fromLTRB(13.5, 0.0, 10.0, 0.0),
                           padding: EdgeInsets.fromLTRB(0.0, 4.25, 0.0, 4.25),
@@ -200,22 +217,24 @@ class CourseFormState extends State<CourseForm> {
                                 letterSpacing: 5.0),
                           ),
                         ),
-                        //SUBTRACT START HOLE
+                        //MINUS BUTTON
                         IcnButton(
                             Icons.add, 35.0, Colors.white70.withOpacity(0.5),
                             () {
                           setState(() {
                             changeHoleNumber(inputEnd, 'add', 'end');
-                            setScoreNumColor(inputEnd, 'end');
+                            setHoleNumColor(inputEnd, 'end');
                           });
                         }),
                       ],
                     ),
+                    //SPACER FOR FORMATTING
                     SizedBox(height: 65.0),
+                    //START ROUND BUTTON MOVES TO NEW SCORECARD SCREEN IN NEW MODE
                     WideButton(
                       'Start Round',
                       () {
-                        createCourse(ScoreCard("new"));
+                        createRound(ScoreCard("new"));
                         //global.setHoleNumber('next');
                       },
                     ),

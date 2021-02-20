@@ -6,6 +6,8 @@ import 'package:ReachBack/globals.dart' as global;
 import 'package:ReachBack/screens/roundhistory.dart';
 import 'package:ReachBack/db/database_helper.dart';
 
+//HOME SCREEN -- LANDING SCREEN WHEN APP IS OPENED
+//DISPLAY NEW ROUND AND BEAT YOUR SCORE BUTTONS BELOW APP ICON
 class HomePage extends StatefulWidget {
   HomePage({Key key, this.title}) : super(key: key);
   final String title;
@@ -14,7 +16,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  //HOME SCREEN -- LANDING SCREEN WHEN APP IS OPENED
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -25,13 +26,16 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
+              //DISPLAY APP ICON
               Container(
                 child: CircleAvatar(
                   radius: MediaQuery.of(context).size.height * 0.29,
                   backgroundImage: AssetImage('images/ReachBackLogo.png'),
                 ),
               ),
+              //SPACER FOR FORMATTING
               SizedBox(height: 40.0),
+              //NEW ROUND BUTTON. MOVE TO COURSEFORM SCREEN WHEN PRESSED
               WideButton(
                 'New round',
                 //ON PRESS
@@ -39,7 +43,11 @@ class _HomePageState extends State<HomePage> {
                   global.buttonNav(context, () => CourseForm());
                 },
               ),
+              //SPACER FOR FORMATTING
               SizedBox(height: 40.0),
+              //BEAT YOUR SCORE BUTTON.
+              // EXTRACT ALL ROUND RECORDS FROM DB AND MOVE TO ROUNDHISTORY
+              // SCREEN WHEN PRESSED
               WideButton(
                 'Beat your score',
                 //ON PRESS
