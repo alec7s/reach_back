@@ -26,13 +26,13 @@ class ScoreCardState extends State<ScoreCard> {
 
   void setHoleNumber(String direction) {
     if (direction == 'next') {
-      if ((hole + 1) <= global.newCourse.end) {
+      if ((hole + 1) <= global.newRound.end) {
         hole++;
         holeIndex++;
         print('next hole pressed');
       }
     } else if (direction == 'back') {
-      if ((hole - 1) >= global.newCourse.start) {
+      if ((hole - 1) >= global.newRound.start) {
         hole--;
         holeIndex--;
         print('previous hole pressed');
@@ -46,7 +46,7 @@ class ScoreCardState extends State<ScoreCard> {
   }
 
   getScoreValue() {
-    score = global.newCourse.scores[holeIndex];
+    score = global.newRound.scores[holeIndex];
   }
 
   Color setScoreColor() {
@@ -66,7 +66,7 @@ class ScoreCardState extends State<ScoreCard> {
   }
 
   setHoleBackColor() {
-    if (hole == global.newCourse.start) {
+    if (hole == global.newRound.start) {
       _holeBackColor = Colors.white70.withOpacity(0.1);
     } else {
       _holeBackColor = Colors.white70.withOpacity(0.5);
@@ -77,9 +77,9 @@ class ScoreCardState extends State<ScoreCard> {
   void initState() {
     super.initState();
     holeIndex = 0;
-    hole = global.newCourse.start;
+    hole = global.newRound.start;
     _holeBackColor = Colors.white70.withOpacity(0.1);
-    score = global.newCourse.scores[holeIndex];
+    score = global.newRound.scores[holeIndex];
   }
 
   @override
@@ -94,7 +94,7 @@ class ScoreCardState extends State<ScoreCard> {
         backgroundColor: Colors.black,
         appBar: AppBar(
           backgroundColor: Theme.of(context).accentColor.withOpacity(0.9),
-          title: Text(global.newCourse.name),
+          title: Text(global.newRound.name),
         ),
         body: SingleChildScrollView(
           child: Column(
@@ -115,8 +115,8 @@ class ScoreCardState extends State<ScoreCard> {
                       () {
                         setState(
                           () {
-                            if (hole > global.newCourse.start) {
-                              global.newCourse.setScore(holeIndex, score);
+                            if (hole > global.newRound.start) {
+                              global.newRound.setScore(holeIndex, score);
                               setHoleNumber('back');
                               setHoleBackColor();
                               getScoreValue();
@@ -171,13 +171,13 @@ class ScoreCardState extends State<ScoreCard> {
                       () {
                         setState(
                           () {
-                            if (hole < global.newCourse.end) {
-                              global.newCourse.setScore(holeIndex, score);
+                            if (hole < global.newRound.end) {
+                              global.newRound.setScore(holeIndex, score);
                               setHoleNumber('next');
                               setHoleBackColor();
                               getScoreValue();
                             } else {
-                              global.newCourse.setScore(holeIndex, score);
+                              global.newRound.setScore(holeIndex, score);
                               global.buttonNav(
                                 context,
                                 () => ScoreTable(),

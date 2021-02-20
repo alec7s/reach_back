@@ -80,7 +80,7 @@ class CourseFormState extends State<CourseForm> {
         (inputStart != 0) &&
         (inputEnd >= inputStart)) {
       print('Form validated');
-      global.newCourse = Round(
+      global.newRound = Round(
         _fieldController.text,
         inputStart,
         inputEnd,
@@ -152,7 +152,6 @@ class CourseFormState extends State<CourseForm> {
                             inputStart.toString().padLeft(2, '0'),
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                                //TODO MAKE TEXT COLOR DYNAMIC (> 0 = RED)
                                 color: startHoleColor,
                                 fontSize: 35.0,
                                 fontWeight: FontWeight.w300,
@@ -195,7 +194,6 @@ class CourseFormState extends State<CourseForm> {
                             inputEnd.toString().padLeft(2, '0'),
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                                //TODO MAKE TEXT COLOR DYNAMIC (> 0 = RED)
                                 color: endHoleColor,
                                 fontSize: 35.0,
                                 fontWeight: FontWeight.w300,

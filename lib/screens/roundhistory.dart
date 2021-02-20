@@ -17,6 +17,7 @@ class RoundHistory extends StatefulWidget {
   }
 }
 
+//TODO: ADD STATUS OF ROUND (WON / LOST / NOT PLAYED)
 class RoundHistoryState extends State<RoundHistory> {
   Map<String, dynamic> selectedRoundDataMap;
 
@@ -30,11 +31,13 @@ class RoundHistoryState extends State<RoundHistory> {
           backgroundColor: Theme.of(context).accentColor.withOpacity(0.9),
           title: const Text('Previous Rounds'),
           actions: <Widget>[
+            //ADD DELETE BUTTON USING TRASH CAN ICON TO CLEAR ROUND HISTORY
             IconButton(
                 icon: Icon(
                   Icons.delete,
                   color: Colors.white,
                 ),
+                //DISPLAY ALERT DIALOG WHEN TRASH CAN ICON BUTTON IS PRESSED
                 onPressed: () {
                   showDialog<void>(
                       context: context,
@@ -46,6 +49,7 @@ class RoundHistoryState extends State<RoundHistory> {
                             child: Text(
                                 'Are you sure you want to clear all previous rounds?'),
                           ),
+                          //CONFIRM DELETION
                           actions: <Widget>[
                             TextButton(
                               child: Text('YES'),
@@ -83,21 +87,33 @@ class RoundHistoryState extends State<RoundHistory> {
                 //OPEN SCORECARD IN REPLAY MODE IF ROUND IS SELECTED
                 if (selectedRoundDataMap != null) {
                   //CONSTRUCT NEW ROUND USING SELECTED ROUND DATA
+                  //SET NUMBER OF HOLES FOR ROUND / SCORE CARD
+                  //EXTRACT STRING VAR FROM DB AS LIST
                   List<String> roundHolesListStr =
                       selectedRoundDataMap['holeList'].split(',');
+                  //CONVERT LIST FROM STRING TO INT FOR USE IN NEW ROUND OBJECT
+                  //THAT'S USED WHEN NEW ROUND IS CREATED
                   List<int> roundHolesListInt =
                       roundHolesListStr.map(int.parse).toList();
+                  //SET START HOLE FOR NEW ROUND
                   int selectedRoundStartInt = roundHolesListInt[0];
+                  //SET END HOLE FOR NEW ROUND
                   int selectedRoundEndInt =
                       roundHolesListInt[roundHolesListInt.length - 1];
-                  global.newCourse = Round(selectedRoundDataMap['name'],
+                  //CREATE NEW ROUND USING GLOBAL newRound VARIABLE
+                  global.newRound = Round(selectedRoundDataMap['name'],
                       selectedRoundStartInt, selectedRoundEndInt,
                       roundType: "replay");
+                  //ROUTE TO NEW SCORECARD SCREEN IN REPLAY MODE
+                  //REPLAY MODE WILL USE PREVIOUS ROUND DATA FROM DB TO
+                  //SET THE ROUND PARAMETERS, THEN THE USER ATTEMPTS TO
+                  //BEAT THE PREVIOUS ROUND'S SCORES IN A NEW ROUND
                   global.buttonNav(context, () {
                     return ScoreCard("replay",
                         previousRoundData: selectedRoundDataMap);
                   });
                 } else {
+                  //ERROR MESSAGE IF NO ROUND IS SELECTED
                   return global.constraintNotifier("Please select a round");
                 }
               }),

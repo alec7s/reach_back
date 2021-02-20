@@ -16,7 +16,7 @@ class ScoreTable extends StatefulWidget {
 class ScoreTableState extends State<ScoreTable> {
   int validateScores() {
     int result = 0;
-    for (int score in global.newCourse.scores) {
+    for (int score in global.newRound.scores) {
       if (score == 0) {
         global.constraintNotifier('Scores cannot be zero');
         result = 1;
@@ -33,7 +33,7 @@ class ScoreTableState extends State<ScoreTable> {
         backgroundColor: Colors.black,
         appBar: AppBar(
           backgroundColor: Theme.of(context).accentColor.withOpacity(0.9),
-          title: Text(global.newCourse.name),
+          title: Text(global.newRound.name),
         ),
         body: SingleChildScrollView(
           child: Column(
@@ -59,15 +59,15 @@ class ScoreTableState extends State<ScoreTable> {
                   //ON PRESSED
                   () async {
                 if (validateScores() == 0) {
-                  global.newCourse.setFinalScore();
-                  global.newCourse.setListStrings();
+                  global.newRound.setFinalScore();
+                  global.newRound.setListStrings();
                   int i = await DatabaseHelper.instance.insert(
                     {
-                      'date': global.newCourse.dateYmd,
-                      'name': global.newCourse.name,
-                      'finalScore': global.newCourse.finalScore,
-                      'holeList': global.newCourse.holesString,
-                      'scoreList': global.newCourse.scoresString,
+                      'date': global.newRound.dateYmd,
+                      'name': global.newRound.name,
+                      'finalScore': global.newRound.finalScore,
+                      'holeList': global.newRound.holesString,
+                      'scoreList': global.newRound.scoresString,
                       'status': 'incomplete',
                     },
                   );

@@ -47,7 +47,6 @@ class RoundMatrixState extends State<RoundMatrix> {
                     padding: EdgeInsets.all(0.0),
                     child: Theme(
                       data: ThemeData.dark(),
-                      //TODO: CONFIRM WORKING AFTER CHANGING TO STATEFUL
                       child: Radio(
                         activeColor: Colors.redAccent,
                         value: rowNumberList[i],

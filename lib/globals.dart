@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 //*******************************************
 //VARIABLES
-var newCourse;
+var newRound;
 var selectedRound;
 
 //*******************************************
