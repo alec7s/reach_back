@@ -35,7 +35,7 @@ class DatabaseHelper {
       finalScore INTEGER, 
       holeList TEXT NOT NULL,
       scoreList TEXT NOT NULL, 
-      status TEXT NOT NULL)
+      roundStatus TEXT NOT NULL)
       ''');
   }
 

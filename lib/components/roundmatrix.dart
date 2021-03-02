@@ -24,6 +24,7 @@ class RoundMatrixState extends State<RoundMatrix> {
         String date = widget.data[i]['date'];
         String name = widget.data[i]['name'];
         int finalScore = widget.data[i]['finalScore'];
+        String roundStatus = widget.data[i]['roundStatus'];
 
         //ADD rowNumber to rowNumberList, rowNumber TO BE USED AS RADIO BUTTON GROUP VALUE
         rowNumberList.add(i + 1);
@@ -140,7 +141,6 @@ class RoundMatrixState extends State<RoundMatrix> {
                 alignment: Alignment.center,
                 width: MediaQuery.of(context).size.width * 0.1,
                 height: MediaQuery.of(context).size.width * 0.1,
-                //color: Colors.white38,
               ),
               Container(
                 alignment: Alignment.center,
@@ -148,7 +148,7 @@ class RoundMatrixState extends State<RoundMatrix> {
                 child: Text(
                   'Date',
                   style: TextStyle(
-                    fontSize: 23.0,
+                    fontSize: 18.0,
                     color: Colors.white,
                     fontWeight: FontWeight.w500,
                   ),
@@ -156,11 +156,11 @@ class RoundMatrixState extends State<RoundMatrix> {
               ),
               Container(
                 alignment: Alignment.center,
-                width: MediaQuery.of(context).size.width * 0.5,
+                width: MediaQuery.of(context).size.width * 0.44,
                 child: Text(
                   'Course',
                   style: TextStyle(
-                    fontSize: 23.0,
+                    fontSize: 18.0,
                     color: Colors.white,
                     fontWeight: FontWeight.w500,
                   ),
@@ -168,11 +168,11 @@ class RoundMatrixState extends State<RoundMatrix> {
               ),
               Container(
                 alignment: Alignment.center,
-                width: MediaQuery.of(context).size.width * 0.15,
+                width: MediaQuery.of(context).size.width * 0.21,
                 child: Text(
-                  'Score',
+                  'Top Score',
                   style: TextStyle(
-                    fontSize: 23.0,
+                    fontSize: 18.0,
                     color: Colors.white,
                     fontWeight: FontWeight.w500,
                   ),

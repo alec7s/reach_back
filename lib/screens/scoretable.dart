@@ -64,6 +64,7 @@ class ScoreTableState extends State<ScoreTable> {
               ),
               //SAVE BUTTON TO SAVE ROUND INFORMATION TO DB
               //TODO: EDIT ON PRESSED TO EDIT PREVIOUS ROUND IN DB RECORD IF IN REPLAY MODE
+              //TODO: UPDATE COURSE RECORD IN DB WITH NEW SCORE AND DATE WHEN SAVING IN REPLAY MODE
               WideButton('Save',
                   //ON PRESSED
                   () async {
@@ -71,6 +72,7 @@ class ScoreTableState extends State<ScoreTable> {
                   //SET ROUND VALUES AND SAVE INTO FORMATS COMPATIBLE WITH DB VARS
                   global.newRound.setFinalScore();
                   global.newRound.setListStrings();
+                  global.newRound.roundStatus = 'Not Played';
                   int i = await DatabaseHelper.instance.insert(
                     {
                       'date': global.newRound.dateYmd,
@@ -78,7 +80,7 @@ class ScoreTableState extends State<ScoreTable> {
                       'finalScore': global.newRound.finalScore,
                       'holeList': global.newRound.holesString,
                       'scoreList': global.newRound.scoresString,
-                      'status': 'incomplete',
+                      'roundStatus': global.newRound.roundStatus,
                     },
                   );
                   print('Saved course (id = $i)');

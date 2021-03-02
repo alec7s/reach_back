@@ -82,7 +82,6 @@ class RoundHistoryState extends State<RoundHistory> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               RoundMatrix(widget.data),
-              //TODO ADD ON PRESS FUNCTION -- ROUTE TO NEW SCORECARD SCREEN
               WideButton("START",
                   //ON PRESSED
                   () {

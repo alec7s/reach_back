@@ -12,6 +12,7 @@ class Round {
   String holesString;
   String scoresString;
   String roundType;
+  String roundStatus;
 
   Round(this.name, this.start, this.end,
       {this.id, this.finalScore, this.dateYmd, this.roundType}) {
